@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mafia", "Mafia\Mafia.csproj", "{5A1D20B1-93F0-4EF1-AC86-622B4EDFCE70}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mafia.User", "Mafia.User", "{022D4DE4-6FB0-49D3-9B2D-621A32B07214}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mafia.User.API", "Mafia.User.API\Mafia.User.API.csproj", "{A9429771-D982-4A02-8B87-D637E6B1DA2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mafia.User.Infrastructure", "Mafia.User.Infrastructure\Mafia.User.Infrastructure.csproj", "{2FD66A1E-9B24-4B99-993C-E7E0EADEE3AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mafia.User.Application", "Mafia.User.Application\Mafia.User.Application.csproj", "{53F23849-F39D-428A-896A-3A519BB27191}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mafia.User.Domain", "Mafia.User.Domain\Mafia.User.Domain.csproj", "{26530F01-9CEA-4E2C-9AEB-EC1F3944F368}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A1D20B1-93F0-4EF1-AC86-622B4EDFCE70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A1D20B1-93F0-4EF1-AC86-622B4EDFCE70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A1D20B1-93F0-4EF1-AC86-622B4EDFCE70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A1D20B1-93F0-4EF1-AC86-622B4EDFCE70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9429771-D982-4A02-8B87-D637E6B1DA2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9429771-D982-4A02-8B87-D637E6B1DA2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9429771-D982-4A02-8B87-D637E6B1DA2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9429771-D982-4A02-8B87-D637E6B1DA2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FD66A1E-9B24-4B99-993C-E7E0EADEE3AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FD66A1E-9B24-4B99-993C-E7E0EADEE3AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FD66A1E-9B24-4B99-993C-E7E0EADEE3AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FD66A1E-9B24-4B99-993C-E7E0EADEE3AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53F23849-F39D-428A-896A-3A519BB27191}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53F23849-F39D-428A-896A-3A519BB27191}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53F23849-F39D-428A-896A-3A519BB27191}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53F23849-F39D-428A-896A-3A519BB27191}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26530F01-9CEA-4E2C-9AEB-EC1F3944F368}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26530F01-9CEA-4E2C-9AEB-EC1F3944F368}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26530F01-9CEA-4E2C-9AEB-EC1F3944F368}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26530F01-9CEA-4E2C-9AEB-EC1F3944F368}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A9429771-D982-4A02-8B87-D637E6B1DA2D} = {022D4DE4-6FB0-49D3-9B2D-621A32B07214}
+		{2FD66A1E-9B24-4B99-993C-E7E0EADEE3AD} = {022D4DE4-6FB0-49D3-9B2D-621A32B07214}
+		{53F23849-F39D-428A-896A-3A519BB27191} = {022D4DE4-6FB0-49D3-9B2D-621A32B07214}
+		{26530F01-9CEA-4E2C-9AEB-EC1F3944F368} = {022D4DE4-6FB0-49D3-9B2D-621A32B07214}
+	EndGlobalSection
+EndGlobal
