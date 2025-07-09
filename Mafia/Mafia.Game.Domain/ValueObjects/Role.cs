@@ -6,14 +6,26 @@ namespace Mafia.Game.Domain.ValueObjects;
 
 public class Role : ValueObject
 {
-    public RoleType Type{ get; }
-    public PhaseType ActivePhase { get; }
-    public List<RoleAction> Actions { get; }
+    public RoleType Type { get; }
+    public readonly IReadOnlyList<ActionType> ActionTypes;
 
 
-    private Role(RoleType type)
+    public Role(RoleType type)
     {
         Type = type;
+        ActionTypes = GetAvailableActionByRole(type);
+    }
+
+    private IReadOnlyList<ActionType> GetAvailableActionByRole(RoleType role)
+    {
+        return role switch
+        {
+            RoleType.Civil => [ActionType.Vote],
+            RoleType.Mafia => [ActionType.Vote, ActionType.Kill],
+            RoleType.Detective => [ActionType.Vote, ActionType.Kill, ActionType.CheckIsMafia],
+            RoleType.Doctor => [ActionType.Vote, ActionType.Heal],
+            _ => []
+        };
     }
 
     public static Role Mafia => new(RoleType.Mafia);
@@ -21,9 +33,9 @@ public class Role : ValueObject
     public static Role Doctor => new(RoleType.Doctor);
     public static Role Detective => new(RoleType.Detective);
     public static Role Viewer => new(RoleType.Viewer);
-
+    
     protected override IEnumerable<object?> GetEqualityComponents()
     {
-        throw new NotImplementedException();
+        yield return Type;
     }
 }
