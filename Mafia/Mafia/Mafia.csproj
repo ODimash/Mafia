@@ -17,4 +17,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Mafia.User.API\Mafia.User.API.csproj" />
+  </ItemGroup>
+
 </Project>

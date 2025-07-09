@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Mafia.Shared.Kernel\Mafia.Shared.Kernel.csproj" />
+  </ItemGroup>
+
 </Project>
