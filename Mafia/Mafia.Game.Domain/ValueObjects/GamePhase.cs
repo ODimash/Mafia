@@ -15,7 +15,7 @@ public class GamePhase : ValueObject
     public List<RoleAction> PerfectActions { get; private set; }
     public DateTime EndTime { get; private set; }
 
-    private GamePhase(PhaseType type, DateTime endTime, List<Player> playersForAction,  List<RoleAction> perfectActions)
+    private GamePhase(PhaseType type, DateTime endTime, List<Player> playersForAction, List<RoleAction> perfectActions)
     {
         Type = type;
         PlayersForAction = playersForAction;
@@ -30,35 +30,26 @@ public class GamePhase : ValueObject
         return new GamePhase(type, endTime, playersForAction, perfectActions);
     }
 
-    public Result ProceedToNextPhase(List<Player> playersForAction, DateTime endTime)
+    public Result ProceedToNextPhase(List<Player> playersForAction, DateTime nextEndTime)
     {
         var isPhaseTimeOver = DateTime.UtcNow > EndTime;
         var allActionCompleted = playersForAction.All(p => PerfectActions.Any(a => a.ActorId == p.Id));
 
+        if (!isPhaseTimeOver && Type.IsDiscussion())
+            return Result.Fail("The time for discussion is not over");
+
         if (!isPhaseTimeOver && !allActionCompleted)
             return Result.Fail("The players did not make their choice");
 
-        if (endTime < DateTime.UtcNow)
+        if (nextEndTime < DateTime.UtcNow)
             return Result.Fail("Phase end time can not be past time");
 
-        Type = NextPhaseType();
+        Type = Type.GetNextPhase();
         PlayersForAction = playersForAction;
         PerfectActions.Clear();
-        EndTime = endTime;
+        EndTime = nextEndTime;
 
         return Result.Ok();
-    }
-
-    public PhaseType NextPhaseType()
-    {
-        return Type switch
-        {
-            PhaseType.Night => PhaseType.DayDiscussion,
-            PhaseType.DayDiscussion => PhaseType.Voting,
-            PhaseType.Voting => PhaseType.Night,
-            _ => throw new NotImplementedException()
-        };
-
     }
 
 
