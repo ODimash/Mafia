@@ -24,4 +24,9 @@ public class UserRepository : IUserRepository
         _users.Remove(user);
         return Task.CompletedTask;
     }
+
+    public Task<bool> ExistsByEmailAsync(string email, CancellationToken cancellationToken = default)
+    {
+        return Task.FromResult(_users.Any(u => u.Email.Value == email));
+    }
 }
