@@ -6,5 +6,5 @@ public enum ActionType
     Kill,
     CheckIsMafia,
     Heal,
-    Vote
+    Vote,
 }

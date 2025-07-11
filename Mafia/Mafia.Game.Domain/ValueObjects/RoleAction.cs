@@ -28,7 +28,7 @@ public class RoleAction : ValueObject
         if (target.IsKilled)
             return Result.Fail("You can not make something with died player");
 
-        if (!actor.Role.ActionTypes.Contains(actionType))
+        if (!actor.Role.GetAvailableActionByRole().Contains(actionType))
             return Result.Fail($"{actor.Role} can not ${actionType}");
 
         if (actor.LastAction != null)
