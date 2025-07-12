@@ -29,4 +29,10 @@ public class UserRepository : IUserRepository
     {
         return Task.FromResult(_users.Any(u => u.Email.Value == email));
     }
+
+    public Task<DomainUser?> GetByEmailAsync(string email, CancellationToken cancellationToken)
+    {
+        var user = _users.FirstOrDefault(u => u.Email.Value == email);
+        return Task.FromResult(user);
+    }
 }

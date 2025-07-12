@@ -14,32 +14,29 @@ public class UserService
     {
         _repository = repository;
     }
-    //public async Task<Result<DomainUser>> RegisterAsync(string username, string email, string password, string confirmPassword)
-    //{
-    //    // 1. Валидация value objects
-    //    var emailResult = Email.Create(email);
-    //    if (!emailResult.IsSuccess)
-    //        return Result.Fail<DomainUser>(emailResult.Errors);
-
-    //    // 2. Проверка существования email в БД
-    //    if (await _repository.ExistsByEmailAsync(emailResult.Value.Value))
-    //        return Result.Fail<DomainUser>("Пользователь с таким email уже существует.");
-
-    //}
-    public async Task<DomainUser?> GetUserAsync(Guid id, CancellationToken cancellationToken = default)
-        => await _repository.GetByIdAsync(id, cancellationToken);
-
-    public async Task CreateUserAsync(string userName, string email, CancellationToken cancellationToken = default)
+    public async Task<Result<DomainUser>> LoginAsync(string email, string password, CancellationToken cancellationToken = default)
     {
-        //var user = new DomainUser(Guid.NewGuid(), userName, email);
-        //await _repository.AddAsync(user, cancellationToken);
+        var emailResult = Email.Create(email);
+        if (!emailResult.IsSuccess)
+            return Result.Fail<DomainUser>(emailResult.Errors);
+
+        var passwordResult = PasswordHash.Create(password);
+        if (!passwordResult.IsSuccess)
+            return Result.Fail<DomainUser>(passwordResult.Errors);
+
+        var user = await _repository.GetByEmailAsync(emailResult.Value.Value, cancellationToken);
+        if (user is null)
+            return Result.Fail<DomainUser>("Пользователь с таким email не найден.");
+
+        if (user.PasswordHash != passwordResult.Value)
+            return Result.Fail<DomainUser>("Неверный пароль.");
+
+        return Result.Ok(user);
+    }
+    public async Task<Result> RegistrationUser(string userName, string gender, string email, string password, CancellationToken cancellationToken)
+    {
+
+        return Result.Ok();
     }
 
-    public async Task ChangeEmailAsync(Guid id, string newEmail, CancellationToken cancellationToken = default)
-    {
-        var user = await _repository.GetByIdAsync(id, cancellationToken);
-        if (user is null) throw new Exception("User not found");
-        //user.ChangeEmail(newEmail);
-        await _repository.UpdateAsync(user, cancellationToken);
-    }
 }

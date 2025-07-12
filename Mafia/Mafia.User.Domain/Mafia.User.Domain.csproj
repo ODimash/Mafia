@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Mafia.Shared.Kernel\Mafia.Shared.Kernel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\" />
+  </ItemGroup>
+
 </Project>
