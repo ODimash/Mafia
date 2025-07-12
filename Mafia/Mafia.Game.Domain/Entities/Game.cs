@@ -2,6 +2,8 @@
 using Mafia.Game.Domain.Enums;
 using Mafia.Game.Domain.ValueObjects;
 using Mafia.Shared.Kernel;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 
 namespace Mafia.Game.Domain.Entities;
 
@@ -37,9 +39,9 @@ public class Game : Entity<Guid>
         var id = Guid.NewGuid();
 
         if (playerData.Count != settings.PlayersCount)
-            return Result.Fail("Number of players must match the settings' player count");
+            return Result.Fail("Number of players must match the settings player count");
 
-        var players = new List<Player>();
+        var players = new List<Player>(playerData.Count);
         foreach (var (identityId, role) in playerData)
         {
             var playerResult = Player.Create(identityId, role);
@@ -53,7 +55,7 @@ public class Game : Entity<Guid>
             return Result.Fail("Player roles must match the settings' roles");
 
         var playersForAction = GetPlayersForAction(players, PhaseType.Night);
-        var phaseResult = GamePhase.Create(PhaseType.Night, firstPhaseEndTime, playersForAction, new List<RoleAction>());
+        var phaseResult = GamePhase.Create(PhaseType.Night, firstPhaseEndTime, playersForAction);
         if (phaseResult.IsFailed)
             return phaseResult.ToResult<Game>();
 
@@ -73,6 +75,9 @@ public class Game : Entity<Guid>
 
         if (!CurrentPhase.PlayersForAction.Contains(actor))
             return Result.Fail("Player is not allowed to perform actions in this phase");
+
+        if (actionType.GetPhase() != CurrentPhase.Type)
+            return Result.Fail("You cannot act now");
 
         var actionResult = RoleAction.Create(actor, target, actionType);
         if (actionResult.IsFailed)
@@ -94,9 +99,10 @@ public class Game : Entity<Guid>
 
         var phaseResult = CurrentPhase.ProceedToNextPhase(playersForAction, nextEndTime);
         if (phaseResult.IsFailed)
-            return phaseResult;
+            return phaseResult.ToResult();
 
         ApplyPhaseActions();
+        CurrentPhase = phaseResult.Value;
         CheckGameEnd();
 
         return Result.Ok();
@@ -118,39 +124,86 @@ public class Game : Entity<Guid>
 
     private void ApplyNightActions(List<RoleAction> actions)
     {
-        var killActions = actions.Where(a => a.ActionType == ActionType.Kill).ToList();
-        var healAction = actions.FirstOrDefault(a => a.ActionType == ActionType.Heal);
-        var checkAction = actions.FirstOrDefault(a => a.ActionType == ActionType.CheckIsMafia);
+        var blockActions = actions.Where(a => a.ActionType == ActionType.Block).ToList();
 
-        // Handle kill actions
-        var killTarget = killActions.GroupBy(a => a.TargetId)
+        List<AppliedAction> appliedActions = new(actions.Count);
+
+        foreach (var action in blockActions)
+        {
+            actions.RemoveAll(a => a.ActorId == action.TargetId);
+        }
+
+        var votesToKill = actions.Where(a => a.ActionType == ActionType.VotingToKill);
+        var checkActions = actions.Where(a => a.ActionType == ActionType.CheckIsMafia);
+        var killActions = actions.Where(a => a.ActionType == ActionType.Kill).ToList();
+        var healActions = actions.Where(a => a.ActionType == ActionType.Heal).ToList();
+
+        foreach (var killAction in killActions)
+        {
+            var targetToKill = Players.Where(p => p.Id == killAction.TargetId).SingleOrDefault();
+            var targetHealed = healActions.Any(a => a.TargetId == killAction.TargetId);
+            var actorBlocked = blockActions.Any(a => a.TargetId != killAction.ActorId);
+
+            if (!targetHealed && targetToKill != null)
+            {
+                targetToKill.Kill();
+                appliedActions.Add(new(targetToKill.Id, ActionType.Kill));
+            }
+        }
+
+        foreach (var action in checkActions)
+        {
+            var targetPlayer = Players.SingleOrDefault(x => x.Id == action.TargetId);
+            if (targetPlayer == null)
+                continue;
+
+            var isMafiaTeammate = targetPlayer.Role.GetSide() == SideType.MafiaTeam;
+            appliedActions.Add(new(action.TargetId, ActionType.CheckIsMafia, true, isMafiaTeammate.ToString()));
+        }
+
+        var mafiaVictimId = votesToKill
+            .GroupBy(vk => vk.TargetId)
             .OrderByDescending(g => g.Count())
             .FirstOrDefault()?.Key;
 
-        if (killTarget != null && healAction?.TargetId != killTarget)
-        {
-            var targetPlayer = Players.FirstOrDefault(p => p.Id == killTarget);
-            targetPlayer?.Kill();
-        }
+        var mafiaVictim = Players.Where(p => p.Id == mafiaVictimId).FirstOrDefault();
+        var mafiaVictimHealed = healActions.Any(x => x.TargetId == mafiaVictimId);
 
-        // Handle check action (no state change, just information for detective)
+        if (!mafiaVictimHealed && mafiaVictimId != null)
+        {
+            var targetPlayer = Players.Where(x => x.Id == mafiaVictimId).FirstOrDefault();
+            targetPlayer?.Kill();
+            appliedActions.Add(new(mafiaVictimId.Value, ActionType.Kill));
+        }
     }
 
-    private Player? ApplyVotingActions(List<RoleAction> actions)
+    private void ApplyVotingActions(List<RoleAction> actions)
     {
-        var voteTarget = actions.Where(a => a.ActionType == ActionType.Vote)
+        var votes = actions
+            .Where(a => a.ActionType == ActionType.Vote && a.TargetId != Guid.Empty)
             .GroupBy(a => a.TargetId)
-            .OrderByDescending(g => g.Count())
-            .FirstOrDefault()?.Key;
+            .Select(g => new { TargetId = g.Key, Count = g.Count() })
+            .ToList();
 
-        if (voteTarget != null)
-        {
-            var targetPlayer = Players.FirstOrDefault(p => p.Id == voteTarget);
-            targetPlayer?.Kill();
-            return targetPlayer;
-        }
 
-        return null;
+        if (votes.Count == 0) return;
+
+        var skips = actions
+            .Where(a => a.ActionType == ActionType.Vote && a.TargetId == Guid.Empty)
+            .Count();
+
+        var maxVotes = votes.Max(v => v.Count);
+
+        if (skips > maxVotes) 
+            return;
+
+        var topCandidates = votes.Where(v => v.Count == maxVotes).ToList();
+        if (topCandidates.Count > 1)
+            return; // ничья
+
+        var victim = Players.FirstOrDefault(p => p.Id == topCandidates.First().TargetId);
+        victim?.Kill();
+
     }
 
     private void CheckGameEnd()
@@ -181,25 +234,19 @@ public class Game : Entity<Guid>
         }
     }
 
-    private static List<Player> GetPlayersForAction(List<Player> players, PhaseType phaseType)
+    private static List<Player> GetPlayersForAction(List<Player> players, PhaseType phaseType) 
     {
-        return phaseType switch
-        {
-            PhaseType.Night => players.Where(p => !p.IsKilled && p.Role != Role.Civil).ToList(),
-            PhaseType.DayDiscussion => players.Where(p => !p.IsKilled).ToList(),
-            PhaseType.DayVoting => players.Where(p => !p.IsKilled).ToList(),
-            _ => throw new ArgumentOutOfRangeException(nameof(phaseType))
-        };
+        return players
+            .Where(p => !p.IsKilled && p.Role.GetAvailableActionByRole()
+                .Any(a => a.GetPhase() == phaseType))
+            .ToList();
     }
 
-    private TimeSpan GetPhaseDuration(PhaseType phaseType)
+    private TimeSpan GetPhaseDuration(PhaseType phaseType) => phaseType switch
     {
-        return phaseType switch
-        {
-            PhaseType.Night => Settings.NightDuration,
-            PhaseType.DayDiscussion => Settings.DayDiscussionDuration,
-            PhaseType.DayVoting => Settings.VotingDuration,
-            _ => throw new ArgumentOutOfRangeException(nameof(phaseType))
-        };
-    }
+        PhaseType.Night => Settings.NightDuration,
+        PhaseType.DayDiscussion => Settings.DayDiscussionDuration,
+        PhaseType.DayVoting => Settings.VotingDuration,
+        _ => throw new ArgumentOutOfRangeException(nameof(phaseType))
+    };
 }

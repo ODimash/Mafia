@@ -20,12 +20,12 @@ public class RoleAction : ValueObject
         ActionType = actionType;
     }
 
-    public static Result<RoleAction> Create(Player actor, Player target, ActionType actionType)
+    public static Result<RoleAction> Create(Player actor, Player? target, ActionType actionType)
     {
         if (actor.IsKilled)
             return Result.Fail("Died player can not make action");
 
-        if (target.IsKilled)
+        if (target != null && target.IsKilled)
             return Result.Fail("You can not make something with died player");
 
         if (!actor.Role.GetAvailableActionByRole().Contains(actionType))
@@ -34,14 +34,12 @@ public class RoleAction : ValueObject
         if (actor.LastAction != null)
             return Result.Fail("Actions have already been completed");
 
-        return Result.Ok(new RoleAction(actor.Id, target.Id, actionType, DateTime.UtcNow));
+        return Result.Ok(new RoleAction(actor.Id, target?.Id ?? Guid.Empty, actionType, DateTime.UtcNow));
     }
 
 
     protected override IEnumerable<object?> GetEqualityComponents()
     {
-        yield return CreatedAt;
-        yield return ActorId;
         yield return TargetId;
         yield return ActionType;
     }

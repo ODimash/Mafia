@@ -26,7 +26,7 @@ public static class RoleTypeExtensions
     public static IReadOnlyList<ActionType> GetAvailableActionByRole(this Role role) => role switch
     {
         Role.Civil => [ActionType.Vote],
-        Role.Mafia => [ActionType.Vote, ActionType.Kill],
+        Role.Mafia => [ActionType.Vote, ActionType.VotingToKill],
         Role.Detective => [ActionType.Vote, ActionType.Kill, ActionType.CheckIsMafia],
         Role.Doctor => [ActionType.Vote, ActionType.Heal],
         _ => []

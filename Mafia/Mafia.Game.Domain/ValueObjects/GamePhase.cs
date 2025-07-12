@@ -10,10 +10,10 @@ namespace Mafia.Game.Domain.ValueObjects;
 public class GamePhase : ValueObject
 {
 
-    public PhaseType Type { get; private set; }
-    public List<Player> PlayersForAction { get; private set; }
-    public List<RoleAction> PerfectActions { get; private set; }
-    public DateTime EndTime { get; private set; }
+    public PhaseType Type { get; }
+    public List<Player> PlayersForAction { get; }
+    public List<RoleAction> PerfectActions { get; }
+    public DateTime EndTime { get; }
 
     private GamePhase(PhaseType type, DateTime endTime, List<Player> playersForAction, List<RoleAction> perfectActions)
     {
@@ -23,14 +23,14 @@ public class GamePhase : ValueObject
         EndTime = endTime;
     }
 
-    public static Result<GamePhase> Create(PhaseType type, DateTime endTime, List<Player> playersForAction, List<RoleAction> perfectActions)
+    public static Result<GamePhase> Create(PhaseType type, DateTime endTime, List<Player> playersForAction)
     {
         if (endTime < DateTime.UtcNow)
             return Result.Fail("Phase end time can not be past time");
-        return new GamePhase(type, endTime, playersForAction, perfectActions);
+        return new GamePhase(type, endTime, playersForAction, []);
     }
 
-    public Result ProceedToNextPhase(List<Player> playersForAction, DateTime nextEndTime)
+    public Result<GamePhase> ProceedToNextPhase(List<Player> playersForAction, DateTime nextEndTime)
     {
         var isPhaseTimeOver = DateTime.UtcNow > EndTime;
         var allActionCompleted = playersForAction.All(p => PerfectActions.Any(a => a.ActorId == p.Id));
@@ -44,12 +44,8 @@ public class GamePhase : ValueObject
         if (nextEndTime < DateTime.UtcNow)
             return Result.Fail("Phase end time can not be past time");
 
-        Type = Type.GetNextPhase();
-        PlayersForAction = playersForAction;
-        PerfectActions.Clear();
-        EndTime = nextEndTime;
-
-        return Result.Ok();
+        
+        return Create(Type.GetNextPhase(), nextEndTime, playersForAction);
     }
 
 
