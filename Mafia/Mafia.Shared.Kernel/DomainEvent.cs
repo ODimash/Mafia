@@ -7,5 +7,5 @@ public interface IDomainEvent
 
 public abstract class DomainEvent : IDomainEvent
 {
-    public DateTime OccurredOn { get; private set; } = DateTime.UtcNow;
+    public DateTime OccurredOn { get; protected set; } = DateTime.UtcNow;
 }

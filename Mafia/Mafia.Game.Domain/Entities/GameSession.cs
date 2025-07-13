@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using Mafia.Game.Domain.Enums;
+using Mafia.Game.Domain.Events;
 using Mafia.Game.Domain.ValueObjects;
 using Mafia.Shared.Kernel;
 using System.Reflection.Metadata.Ecma335;
@@ -7,7 +8,7 @@ using System.Runtime.CompilerServices;
 
 namespace Mafia.Game.Domain.Entities;
 
-public class Game : Entity<Guid>
+public class GameSession : AggregateRoot<Guid>
 {
     public GameSettings Settings { get; private set; }
     public IReadOnlyList<Player> Players { get; private set; }
@@ -15,7 +16,7 @@ public class Game : Entity<Guid>
     public bool IsFinished { get; private set; }
     public SideType? Winner { get; private set; }
 
-    private Game(
+    private GameSession(
         Guid id,
         GameSettings settings,
         List<Player> players,
@@ -31,7 +32,7 @@ public class Game : Entity<Guid>
         Winner = winner;
     }
 
-    public static Result<Game> Create(
+    public static Result<GameSession> Create(
         GameSettings settings,
         List<(Guid IdentityId, Role Role)> playerData,
         DateTime firstPhaseEndTime)
@@ -46,7 +47,7 @@ public class Game : Entity<Guid>
         {
             var playerResult = Player.Create(identityId, role);
             if (playerResult.IsFailed)
-                return playerResult.ToResult<Game>();
+                return playerResult.ToResult<GameSession>();
             players.Add(playerResult.Value);
         }
 
@@ -57,9 +58,9 @@ public class Game : Entity<Guid>
         var playersForAction = GetPlayersForAction(players, PhaseType.Night);
         var phaseResult = GamePhase.Create(PhaseType.Night, firstPhaseEndTime, playersForAction);
         if (phaseResult.IsFailed)
-            return phaseResult.ToResult<Game>();
+            return phaseResult.ToResult<GameSession>();
 
-        return new Game(id, settings, players, phaseResult.Value);
+        return new GameSession(id, settings, players, phaseResult.Value);
     }
 
     public Result PerformAction(Player actor, Player target, ActionType actionType)
@@ -84,6 +85,7 @@ public class Game : Entity<Guid>
             return actionResult.ToResult();
 
         CurrentPhase.PerfectActions.Add(actionResult.Value);
+        AddDomainEvent(new ActionPerformedEvent(actionResult.Value));
         return Result.Ok();
     }
 
@@ -175,6 +177,8 @@ public class Game : Entity<Guid>
             targetPlayer?.Kill();
             appliedActions.Add(new(mafiaVictimId.Value, ActionType.Kill));
         }
+
+        AddDomainEvent(new NightActionsAppliedEvent(appliedActions));
     }
 
     private void ApplyVotingActions(List<RoleAction> actions)
@@ -203,7 +207,7 @@ public class Game : Entity<Guid>
 
         var victim = Players.FirstOrDefault(p => p.Id == topCandidates.First().TargetId);
         victim?.Kill();
-
+        AddDomainEvent(new VotingFinishedEvent(victim));
     }
 
     private void CheckGameEnd()
@@ -232,6 +236,9 @@ public class Game : Entity<Guid>
         {
             player.IsWinner = player.Role.GetSide() == winningSide;
         }
+
+        var winners = Players.Where(predicate => predicate.IsWinner).ToList();
+        AddDomainEvent(new GameFinishedEvent(winners, winningSide));
     }
 
     private static List<Player> GetPlayersForAction(List<Player> players, PhaseType phaseType) 
