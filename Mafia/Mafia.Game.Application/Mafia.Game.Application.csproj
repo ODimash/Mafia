@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\GameSessions\" />
+    <Folder Include="Features\Players\" />
+  </ItemGroup>
+
 </Project>
