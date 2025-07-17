@@ -34,8 +34,7 @@ public class GameSession : AggregateRoot<Guid>
 
     public static Result<GameSession> Create(
         GameSettings settings,
-        List<(Guid IdentityId, Role Role)> playerData,
-        DateTime firstPhaseEndTime)
+        List<(Guid IdentityId, Role Role)> playerData)
     {
         var id = Guid.NewGuid();
 
@@ -56,6 +55,7 @@ public class GameSession : AggregateRoot<Guid>
             return Result.Fail("Player roles must match the settings' roles");
 
         var playersForAction = GetPlayersForAction(players, PhaseType.Night);
+        var firstPhaseEndTime = DateTime.UtcNow.Add(settings.NightDuration);
         var phaseResult = GamePhase.Create(PhaseType.Night, firstPhaseEndTime, playersForAction);
         if (phaseResult.IsFailed)
             return phaseResult.ToResult<GameSession>();

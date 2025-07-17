@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Queries\" />
+    <Folder Include="MapperExtensions\" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Mafia.Game.Domain\Mafia.Game.Domain.csproj" />
+		<ProjectReference Include="..\Mafia.Shared.Contracts\Mafia.Shared.Contracts.csproj" />
+	</ItemGroup>
+
 </Project>

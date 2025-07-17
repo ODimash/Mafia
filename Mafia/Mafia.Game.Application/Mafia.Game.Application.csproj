@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\GameSessions\" />
-    <Folder Include="Features\Players\" />
+    <Folder Include="Handlers\PlayerHandlers\" />
   </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Mafia.Game.Contracts\Mafia.Game.Contracts.csproj" />
+		<ProjectReference Include="..\Mafia.Game.Abstraction\Mafia.Game.Abstraction.csproj" />
+	</ItemGroup>
 
 </Project>
