@@ -6,9 +6,9 @@ namespace Mafia.Game.Domain.Events
 {
     public class ActionPerformedEvent : DomainEvent
     {
-        public RoleAction PerformedAction { get; set; }
+        public PlayerAction PerformedAction { get; set; }
 
-        public ActionPerformedEvent(RoleAction performedAction)
+        public ActionPerformedEvent(PlayerAction performedAction)
         {
             PerformedAction = performedAction;
         }

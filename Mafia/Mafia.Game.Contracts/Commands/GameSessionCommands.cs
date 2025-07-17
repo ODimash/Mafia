@@ -16,4 +16,4 @@ public record StartGameCommand(GameSettingsDto GameSettings, List<Guid> PlayersI
 
 // Internal команды для внутри модульных действии:
 
-public record PerformActionCommand(RoleActionDto Action) : ICommand<Result> { };
+public record PerformActionCommand(PlayerActionDto Action) : ICommand<Result> { };

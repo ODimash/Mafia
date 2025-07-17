@@ -80,7 +80,7 @@ public class GameSession : AggregateRoot<Guid>
         if (actionType.GetPhase() != CurrentPhase.Type)
             return Result.Fail("You cannot act now");
 
-        var actionResult = RoleAction.Create(actor, target, actionType);
+        var actionResult = PlayerAction.Create(actor, target, actionType);
         if (actionResult.IsFailed)
             return actionResult.ToResult();
 
@@ -124,7 +124,7 @@ public class GameSession : AggregateRoot<Guid>
         }
     }
 
-    private void ApplyNightActions(List<RoleAction> actions)
+    private void ApplyNightActions(List<PlayerAction> actions)
     {
         var blockActions = actions.Where(a => a.ActionType == ActionType.Block).ToList();
 
@@ -181,7 +181,7 @@ public class GameSession : AggregateRoot<Guid>
         AddDomainEvent(new NightActionsAppliedEvent(appliedActions));
     }
 
-    private void ApplyVotingActions(List<RoleAction> actions)
+    private void ApplyVotingActions(List<PlayerAction> actions)
     {
         var votes = actions
             .Where(a => a.ActionType == ActionType.Vote && a.TargetId != Guid.Empty)

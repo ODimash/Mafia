@@ -12,10 +12,10 @@ public class GamePhase : ValueObject
 
     public PhaseType Type { get; }
     public List<Player> PlayersForAction { get; }
-    public List<RoleAction> PerfectActions { get; }
+    public List<PlayerAction> PerfectActions { get; }
     public DateTime EndTime { get; }
 
-    private GamePhase(PhaseType type, DateTime endTime, List<Player> playersForAction, List<RoleAction> perfectActions)
+    private GamePhase(PhaseType type, DateTime endTime, List<Player> playersForAction, List<PlayerAction> perfectActions)
     {
         Type = type;
         PlayersForAction = playersForAction;

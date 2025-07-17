@@ -5,14 +5,14 @@ using Mafia.Shared.Kernel;
 
 namespace Mafia.Game.Domain.ValueObjects;
 
-public class RoleAction : ValueObject
+public class PlayerAction : ValueObject
 {
     public DateTime CreatedAt { get; }
     public Guid ActorId { get; }
     public Guid TargetId { get; }
     public ActionType ActionType { get; }
 
-    private RoleAction(Guid actorId, Guid targetId, ActionType actionType, DateTime createdAt)
+    private PlayerAction(Guid actorId, Guid targetId, ActionType actionType, DateTime createdAt)
     {
         CreatedAt = createdAt;
         ActorId = actorId;
@@ -20,7 +20,7 @@ public class RoleAction : ValueObject
         ActionType = actionType;
     }
 
-    public static Result<RoleAction> Create(Player actor, Player? target, ActionType actionType)
+    public static Result<PlayerAction> Create(Player actor, Player? target, ActionType actionType)
     {
         if (actor.IsKilled)
             return Result.Fail("Died player can not make action");
@@ -34,7 +34,7 @@ public class RoleAction : ValueObject
         if (actor.LastAction != null)
             return Result.Fail("Actions have already been completed");
 
-        return Result.Ok(new RoleAction(actor.Id, target?.Id ?? Guid.Empty, actionType, DateTime.UtcNow));
+        return Result.Ok(new PlayerAction(actor.Id, target?.Id ?? Guid.Empty, actionType, DateTime.UtcNow));
     }
 
 

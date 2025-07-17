@@ -37,6 +37,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mafia.Game.Abstraction", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mafia.Game.Contracts", "Mafia.Game.Contracts\Mafia.Game.Contracts.csproj", "{20846B71-A1F6-4A56-9E43-76E971F3A826}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mafia.Lobby", "Mafia.Lobby", "{BFDA5A71-F7D0-4648-9B67-1824A20DBC51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mafia.Lobby.Domain", "Mafia.Lobby.Domain\Mafia.Lobby.Domain.csproj", "{07C141E1-16F2-4F78-A5A8-C1DF1B2156E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +103,10 @@ Global
 		{20846B71-A1F6-4A56-9E43-76E971F3A826}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20846B71-A1F6-4A56-9E43-76E971F3A826}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20846B71-A1F6-4A56-9E43-76E971F3A826}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07C141E1-16F2-4F78-A5A8-C1DF1B2156E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07C141E1-16F2-4F78-A5A8-C1DF1B2156E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07C141E1-16F2-4F78-A5A8-C1DF1B2156E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07C141E1-16F2-4F78-A5A8-C1DF1B2156E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +125,7 @@ Global
 		{471D6D4E-247E-4DA7-B259-84C9CB997B2A} = {D830FA99-7050-47B4-95A6-E4EA07CC3754}
 		{C928B5C1-387B-4727-9635-1DFAD67FEEA1} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 		{20846B71-A1F6-4A56-9E43-76E971F3A826} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
+		{07C141E1-16F2-4F78-A5A8-C1DF1B2156E8} = {BFDA5A71-F7D0-4648-9B67-1824A20DBC51}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A17D8CA-2534-4BC0-815C-D401CAADBFEA}
