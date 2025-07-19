@@ -1,6 +1,6 @@
 ﻿
 using FluentResults;
-using Mafia.Game.Contracts.DTOs;
+using Mafia.Game.Contracts.CommandDTOs;
 using Mafia.Game.Domain.ValueObjects;
 using Mafia.Shared.Contracts.Messaging;
 

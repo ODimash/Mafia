@@ -1,13 +1,11 @@
-﻿
+﻿using Mafia.Shared.Kernel.Enums;
 
-using Mafia.Game.Domain.Enums;
-using Mafia.Shared.Kernel.Enums;
-
-namespace Mafia.Game.Contracts.DTOs;
-
-public class PlayerActionDto
+namespace Mafia.Game.Contracts.CommandDTOs
 {
-    public Guid ActorId { get; }
-    public Guid TargetId { get; }
-    public ActionType ActionType { get; }
+    public class PlayerActionDto
+    {
+        public Guid ActorId { get; set; }
+        public Guid TargetId { get; set; }
+        public ActionType ActionType { get; set; }
+    }
 }
