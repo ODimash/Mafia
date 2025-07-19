@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Handlers\PlayerHandlers\" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Mafia.Games.Contracts\Mafia.Games.Contracts.csproj" />
+		<ProjectReference Include="..\Mafia.Games.Abstraction\Mafia.Games.Abstraction.csproj" />
+	</ItemGroup>
+
+</Project>

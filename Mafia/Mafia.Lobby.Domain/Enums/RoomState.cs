@@ -1,8 +1,7 @@
-namespace Mafia.Lobby.Domain.Enums
+namespace Mafia.Lobby.Domain.Enums;
+
+public enum RoomState
 {
-    public enum RoomState
-    {
-        Waiting,
-        Started
-    }
+    Waiting,
+    Started
 }

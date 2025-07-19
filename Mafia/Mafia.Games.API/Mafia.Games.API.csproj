@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Controllers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="13.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Mafia.Games.Abstraction\Mafia.Games.Abstraction.csproj" />
+    <ProjectReference Include="..\Mafia.Games.Application\Mafia.Games.Application.csproj" />
+    <ProjectReference Include="..\Mafia.Games.Contracts\Mafia.Games.Contracts.csproj" />
+    <ProjectReference Include="..\Mafia.Games.Infrastructure\Mafia.Games.Infrastructure.csproj" />
+    <ProjectReference Include="..\Mafia.Shared.Infrastructure\Mafia.Shared.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

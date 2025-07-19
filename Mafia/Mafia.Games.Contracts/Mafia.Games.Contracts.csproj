@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Queries\" />
+    <Folder Include="MapperExtensions\" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Mafia.Games.Domain\Mafia.Games.Domain.csproj" />
+		<ProjectReference Include="..\Mafia.Shared.Contracts\Mafia.Shared.Contracts.csproj" />
+	</ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="..\Mafia.Game.Application\Mafia.Game.Application.csproj" />
+    </ItemGroup>
+
+</Project>

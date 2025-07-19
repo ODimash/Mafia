@@ -1,9 +1,8 @@
-﻿namespace Mafia.Shared.Kernel.Enums
+﻿namespace Mafia.Shared.Kernel.Enums;
+
+public enum SideType
 {
-    public enum SideType
-    {
-        Neutral,
-        MafiaTeam,
-        CivilianTeam
-    }
+    Neutral,
+    MafiaTeam,
+    CivilianTeam
 }
