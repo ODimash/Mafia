@@ -1,6 +1,6 @@
 ﻿using Mafia.Game.Domain.Entities;
-using Mafia.Game.Domain.Enums;
 using Mafia.Shared.Kernel;
+using Mafia.Shared.Kernel.Enums;
 
 namespace Mafia.Game.Domain.Events
 {

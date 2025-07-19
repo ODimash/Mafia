@@ -1,4 +1,4 @@
-﻿namespace Mafia.Game.Domain.Enums
+﻿namespace Mafia.Shared.Kernel.Enums
 {
     public enum SideType
     {

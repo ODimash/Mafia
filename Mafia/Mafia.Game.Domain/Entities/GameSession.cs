@@ -1,8 +1,8 @@
 ﻿using FluentResults;
-using Mafia.Game.Domain.Enums;
 using Mafia.Game.Domain.Events;
 using Mafia.Game.Domain.ValueObjects;
 using Mafia.Shared.Kernel;
+using Mafia.Shared.Kernel.Enums;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 

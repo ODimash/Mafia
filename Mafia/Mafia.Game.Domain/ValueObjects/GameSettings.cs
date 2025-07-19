@@ -1,16 +1,12 @@
 ﻿using FluentResults;
-using Mafia.Game.Domain.Enums;
 using Mafia.Shared.Kernel;
+using Mafia.Shared.Kernel.Constants;
+using Mafia.Shared.Kernel.Enums;
 
 namespace Mafia.Game.Domain.ValueObjects;
 
 public class GameSettings : ValueObject
 {
-    public static readonly int MinPlayersCount = 5;
-    public static readonly int MaxPlayersCount = 12;
-    public static readonly TimeSpan MaxPhaseDuration = TimeSpan.FromMinutes(5);
-    public static readonly TimeSpan MinPhaseDuration = TimeSpan.FromSeconds(30);
-
     public int PlayersCount => Roles.Count;
     public int MafiaCount => Roles.Count(x => x.GetSide() == SideType.MafiaTeam);
 
@@ -44,11 +40,11 @@ public class GameSettings : ValueObject
         int playersCount = roles.Count;
         int mafiaTeamCount = roles.Count(r => r.GetSide() == SideType.MafiaTeam);
 
-        if (playersCount < MinPlayersCount)
-            return Result.Fail($"Game cannot be created with less than {MinPlayersCount} players");
+        if (playersCount < GameSettingConstants.MinPlayersCount)
+            return Result.Fail($"Game cannot be created with less than {GameSettingConstants.MinPlayersCount} players");
 
-        if (playersCount > MaxPlayersCount)
-            return Result.Fail($"Game cannot be created with more than {MaxPlayersCount} players");
+        if (playersCount > GameSettingConstants.MaxPlayersCount)
+            return Result.Fail($"Game cannot be created with more than {GameSettingConstants.MaxPlayersCount} players");
 
         if (mafiaTeamCount < 1)
             return Result.Fail("Game must have at least one mafia role");
@@ -57,24 +53,24 @@ public class GameSettings : ValueObject
             return Result.Fail("The number of mafia cannot be more than half of the players");
 
         if (!IsValidPhaseDuration(dayDiscussionDuration))
-            return Result.Fail($"Day discussion duration must be between {MinPhaseDuration:g} and {MaxPhaseDuration:g}");
+            return Result.Fail($"Day discussion duration must be between {GameSettingConstants.MinPhaseDuration:g} and {GameSettingConstants.MaxPhaseDuration:g}");
 
         if (!IsValidPhaseDuration(nightDuration))
-            return Result.Fail($"Night duration must be between {MinPhaseDuration:g} and {MaxPhaseDuration:g}");
+            return Result.Fail($"Night duration must be between {GameSettingConstants.MinPhaseDuration:g} and {GameSettingConstants.MaxPhaseDuration:g}");
 
         if (!IsValidPhaseDuration(votingDuration))
-            return Result.Fail($"Voting duration must be between {MinPhaseDuration:g} and {MaxPhaseDuration:g}");
+            return Result.Fail($"Voting duration must be between {GameSettingConstants.MinPhaseDuration:g} and {GameSettingConstants.MaxPhaseDuration:g}");
 
         return new GameSettings(dayDiscussionDuration, nightDuration, votingDuration, roles);
     }
 
     private static bool IsValidPhaseDuration(TimeSpan duration) =>
-        duration >= MinPhaseDuration && duration <= MaxPhaseDuration;
+        duration >= GameSettingConstants.MinPhaseDuration && duration <= GameSettingConstants.MaxPhaseDuration;
 
     public Result<GameSettings> ChangeDayDiscussionDuration(TimeSpan newDuration)
     {
         if (!IsValidPhaseDuration(newDuration))
-            return Result.Fail($"Day discussion duration must be between {MinPhaseDuration:g} and {MaxPhaseDuration:g}");
+            return Result.Fail($"Day discussion duration must be between {GameSettingConstants.MinPhaseDuration:g} and {GameSettingConstants.MaxPhaseDuration:g}");
 
         return new GameSettings(newDuration, NightDuration, VotingDuration, Roles.ToList());
     }
@@ -82,7 +78,7 @@ public class GameSettings : ValueObject
     public Result<GameSettings> ChangeNightDuration(TimeSpan newDuration)
     {
         if (!IsValidPhaseDuration(newDuration))
-            return Result.Fail($"Night duration must be between {MinPhaseDuration:g} and {MaxPhaseDuration:g}");
+            return Result.Fail($"Night duration must be between {GameSettingConstants.MinPhaseDuration:g} and {GameSettingConstants.MaxPhaseDuration:g}");
 
         return new GameSettings(DayDiscussionDuration, newDuration, VotingDuration, Roles.ToList());
     }
@@ -90,7 +86,7 @@ public class GameSettings : ValueObject
     public Result<GameSettings> ChangeVotingDuration(TimeSpan newDuration)
     {
         if (!IsValidPhaseDuration(newDuration))
-            return Result.Fail($"Voting duration must be between {MinPhaseDuration:g} and {MaxPhaseDuration:g}");
+            return Result.Fail($"Voting duration must be between {GameSettingConstants.MinPhaseDuration:g} and {GameSettingConstants.MaxPhaseDuration:g}");
 
         return new GameSettings(DayDiscussionDuration, NightDuration, newDuration, Roles.ToList());
     }

@@ -1,7 +1,7 @@
 ﻿using FluentResults;
-using Mafia.Game.Domain.Enums;
 using Mafia.Game.Domain.ValueObjects;
 using Mafia.Shared.Kernel;
+using Mafia.Shared.Kernel.Enums;
 
 namespace Mafia.Game.Domain.Entities;
 
