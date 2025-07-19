@@ -16,4 +16,8 @@
 		<ProjectReference Include="..\Mafia.Shared.Contracts\Mafia.Shared.Contracts.csproj" />
 	</ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="..\Mafia.Game.Application\Mafia.Game.Application.csproj" />
+    </ItemGroup>
+
 </Project>

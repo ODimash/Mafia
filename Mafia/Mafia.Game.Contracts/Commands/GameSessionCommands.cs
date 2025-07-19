@@ -3,6 +3,7 @@ using FluentResults;
 using Mafia.Game.Contracts.CommandDTOs;
 using Mafia.Game.Domain.ValueObjects;
 using Mafia.Shared.Contracts.Messaging;
+using Mafia.Shared.Kernel.Enums;
 
 namespace Mafia.Game.Contracts.Commands;
 
@@ -16,4 +17,4 @@ public record StartGameCommand(GameSettingsDto GameSettings, List<Guid> PlayersI
 
 // Internal команды для внутри модульных действии:
 
-public record PerformActionCommand(PlayerActionDto Action) : ICommand<Result> { };
+public record PerformActionCommand(Guid GameId, Guid ActorId, Guid TargetId, ActionType ActionType) : ICommand<Result> { };

@@ -7,6 +7,8 @@ namespace Mafia.Game.Abstraction.Repositories
 {
     public interface IGameSessionCommandRepository
     {
-        Task AddGameAsync(GameSession value, CancellationToken cancellationToken);
+        Task AddGame(GameSession value, CancellationToken cancellationToken);
+        Task<GameSession?> GetGameById(Guid requestGameId, CancellationToken cancellationToken);
+        Task Update(GameSession game, CancellationToken cancellationToken);
     }
 }

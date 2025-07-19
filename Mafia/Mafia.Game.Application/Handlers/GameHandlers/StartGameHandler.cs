@@ -31,8 +31,7 @@ public class StartGameHandler : ICommandHandler<StartGameCommand, Result>
 		if (gameResult.IsFailed)
 			return gameResult.ToResult();
 
-		await _gameRepository.AddGameAsync(gameResult.Value, cancellationToken);
-
+		await _gameRepository.AddGame(gameResult.Value, cancellationToken);
 		return Result.Ok();
 	}
 }

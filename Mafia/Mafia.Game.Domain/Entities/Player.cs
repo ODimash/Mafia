@@ -10,14 +10,12 @@ public class Player : Entity<Guid>
     public Guid IdentityId { get; }
     public Role Role { get; }
     public bool IsKilled { get; private set; }
-    public PlayerAction? LastAction { get; }
     public bool IsWinner { get; set; }
 
-    private Player(Guid identityId, Role role, PlayerAction? lastAction = null, bool isKilled = false, bool isWinner = false)
+    private Player(Guid identityId, Role role, bool isKilled = false, bool isWinner = false)
     {
         Role = role;
         IsKilled = isKilled;
-        LastAction = lastAction;
         IdentityId = identityId;
         IsWinner = isWinner;
     }

@@ -56,40 +56,44 @@ namespace Mafia.Game.Domain.Entities
 
             var playersForAction = GetPlayersForAction(players, PhaseType.Night);
             var firstPhaseEndTime = DateTime.UtcNow.Add(settings.NightDuration);
-            var phaseResult = GamePhase.Create(PhaseType.Night, firstPhaseEndTime, playersForAction);
+            var phaseResult = GamePhase.Create(PhaseType.Night, firstPhaseEndTime, playersForAction.Select(p => p.Id).ToList());
             if (phaseResult.IsFailed)
                 return phaseResult.ToResult<GameSession>();
 
             return new GameSession(id, settings, players, phaseResult.Value);
         }
 
-        public Result PerformAction(Player actor, Player target, ActionType actionType)
+        public Result PerformAction(Guid actorId, Guid targetId, ActionType actionType)
         {
             if (IsFinished)
                 return Result.Fail("Game is already finished");
 
-            if (!Players.Contains(actor))
+            if (!Players.Any(p => p.Id == actorId))
                 return Result.Fail("Actor is not part of this game");
 
-            if (!Players.Contains(target))
+            if (!Players.Any(p => p.Id == targetId))
                 return Result.Fail("Target is not part of this game");
 
-            if (!CurrentPhase.PlayersForAction.Contains(actor))
+            if (!CurrentPhase.PlayersForAction.Any((pId =>  pId == actorId)))
                 return Result.Fail("Player is not allowed to perform actions in this phase");
 
             if (actionType.GetPhase() != CurrentPhase.Type)
                 return Result.Fail("You cannot act now");
 
-            var actionResult = PlayerAction.Create(actor, target, actionType);
+            var actionResult = PlayerAction.Create(actorId, targetId, actionType);
             if (actionResult.IsFailed)
                 return actionResult.ToResult();
 
             CurrentPhase.PerfectActions.Add(actionResult.Value);
             AddDomainEvent(new ActionPerformedEvent(actionResult.Value));
+            
+            if (CurrentPhase.IsCanProceessToNextPhase().IsSuccess)
+                ProceedToNextPhase();
+            
             return Result.Ok();
         }
 
-        public Result ProceedToNextPhase()
+        private Result ProceedToNextPhase()
         {
             if (IsFinished)
                 return Result.Fail("Game is already finished");
@@ -97,9 +101,9 @@ namespace Mafia.Game.Domain.Entities
             var nextPhaseType = CurrentPhase.Type.GetNextPhase();
             var duration = GetPhaseDuration(nextPhaseType);
             var nextEndTime = DateTime.UtcNow + duration;
-            var playersForAction = GetPlayersForAction(Players.ToList(), nextPhaseType);
+            var playersIdForAction = GetPlayersForAction(Players.ToList(), nextPhaseType).Select(p => p.Id).ToList();
 
-            var phaseResult = CurrentPhase.ProceedToNextPhase(playersForAction, nextEndTime);
+            var phaseResult = CurrentPhase.ProceedToNextPhase(playersIdForAction, nextEndTime);
             if (phaseResult.IsFailed)
                 return phaseResult.ToResult();
 
