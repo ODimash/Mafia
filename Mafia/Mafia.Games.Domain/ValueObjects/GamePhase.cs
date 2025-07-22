@@ -10,17 +10,18 @@ namespace Mafia.Games.Domain.ValueObjects;
 
 public class GamePhase : ValueObject
 {
+    private List<PlayerAction> _perfectActions = [];
 
     public PhaseType Type { get; }
     public List<Guid> PlayersForAction { get; }
-    public List<PlayerAction> PerfectActions { get; }
+    public IReadOnlyList<PlayerAction> PerfectActions => _perfectActions;
     public DateTime EndTime { get; }
 
     private GamePhase(PhaseType type, DateTime endTime, List<Guid> playersForAction, List<PlayerAction> perfectActions)
     {
         Type = type;
         PlayersForAction = playersForAction;
-        PerfectActions = perfectActions;
+        _perfectActions = perfectActions;
         EndTime = endTime;
     }
 
@@ -29,6 +30,11 @@ public class GamePhase : ValueObject
         if (endTime < DateTime.UtcNow)
             return Result.Fail("Phase end time can not be past time");
         return new GamePhase(type, endTime, playersForAction, []);
+    }
+
+    public void AddPerfectAction(PlayerAction action)
+    {
+        _perfectActions.Add(action);
     }
 
     internal Result IsCanProceessToNextPhase()
