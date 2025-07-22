@@ -26,11 +26,11 @@ public class User : AggregateRoot<Guid>
         AddDomainEvent(new UserRegisteredDomainEvent(Id, Username, email)); // Use a protected method to add domain events  
     }
 
-    public static Result<User> Register(string username, string email, string password, string confirmPassword)
+    public static Result<User> Register(string username, string email, string password)
     {
         List<Error> errors = new();
-        if (password != confirmPassword)
-            errors.Add(new Error("Password and confirmation password do not match.").WithMetadata("ErrorCode", "NotMatch").WithMetadata("Field", "confirmPassword"));
+        //if (password != confirmPassword)
+        //    errors.Add(new Error("Password and confirmation password do not match.").WithMetadata("ErrorCode", "NotMatch").WithMetadata("Field", "confirmPassword"));
 
         var createdEmail = Email.Create(email);
         var createdUsername = Username.Create(username);

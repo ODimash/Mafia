@@ -12,5 +12,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Mafia.User.Application\Mafia.User.Application.csproj" />
 	  <ProjectReference Include="..\Mafia.User.Infrastructure\Mafia.User.Infrastructure.csproj" />
+		<PackageReference Include="MediatR" Version="13.0.0" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
 	</ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
-﻿using Mafia.User.Application.Services;
+﻿using Mafia.User.Application.DTOs;
+using Mafia.User.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mafia.User.API.Controllers;
@@ -15,27 +16,30 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> Get(Guid id)
+    public async Task<ActionResult<UserDto>> Get(Guid id)
     {
         var user = await _service.GetUserAsync(id);
         if (user == null) return NotFound();
-        return Ok(new { user.Id, user.UserName, user.Email });
+        return Ok(user);
     }
 
-    [HttpPost]
+    [HttpPost("Registration")]
     public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
     {
-        await _service.CreateUserAsync(request.UserName, request.Email);
+        await _service.CreateUserAsync(request.UserName, request.Email, request.Password);
         return Ok();
     }
 
-    [HttpPut("{id:guid}/email")]
-    public async Task<IActionResult> ChangeEmail(Guid id, [FromBody] ChangeEmailRequest request)
+    [HttpPost("Login")]
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        await _service.ChangeEmailAsync(id, request.NewEmail);
+        var result = await _service.LoginAsync(request.Email, request.Password);
+        if (result.IsFailed) return BadRequest(result.Errors);
         return Ok();
     }
+
+
 }
 
-public record CreateUserRequest(string UserName, string Email);
-public record ChangeEmailRequest(string NewEmail);
+public record LoginRequest(string Email, string Password);
+public record CreateUserRequest(string UserName, string Email, string Password);
