@@ -1,9 +1,8 @@
 ﻿using FluentResults;
-using Mafia.Games.Domain.ValueObjects;
 using Mafia.Shared.Kernel;
 using Mafia.Shared.Kernel.Enums;
 
-namespace Mafia.Games.Domain.Entities;
+namespace Mafia.Games.Domain.Models;
 
 public class Player : Entity<Guid>
 {

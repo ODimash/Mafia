@@ -1,5 +1,5 @@
 using FluentResults;
-using Mafia.Games.Domain.Entities;
+using Mafia.Games.Domain.Models;
 using Mafia.Games.Domain.Services.Interfaces;
 using Mafia.Shared.Kernel.Enums;
 

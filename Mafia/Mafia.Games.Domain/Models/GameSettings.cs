@@ -3,7 +3,7 @@ using Mafia.Shared.Kernel;
 using Mafia.Shared.Kernel.Constants;
 using Mafia.Shared.Kernel.Enums;
 
-namespace Mafia.Games.Domain.ValueObjects;
+namespace Mafia.Games.Domain.Models;
 
 public class GameSettings : ValueObject
 {

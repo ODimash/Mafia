@@ -1,6 +1,5 @@
 using FluentResults;
-using Mafia.Games.Domain.Entities;
-using Mafia.Games.Domain.ValueObjects;
+using Mafia.Games.Domain.Models;
 
 namespace Mafia.Games.Domain.Services.Interfaces;
 

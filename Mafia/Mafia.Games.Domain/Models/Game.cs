@@ -1,10 +1,9 @@
 ﻿using FluentResults;
 using Mafia.Games.Domain.Events;
-using Mafia.Games.Domain.ValueObjects;
 using Mafia.Shared.Kernel;
 using Mafia.Shared.Kernel.Enums;
 
-namespace Mafia.Games.Domain.Entities;
+namespace Mafia.Games.Domain.Models;
 
 public class Game : AggregateRoot<Guid>
 {
@@ -138,7 +137,7 @@ public class Game : AggregateRoot<Guid>
 		_ => throw new ArgumentOutOfRangeException(nameof(phaseType))
 	};
 
-	public void CheckIsPlayerMafia(Guid actionActorId, Guid targetPlayerId)
+	internal void CheckIsPlayerMafia(Guid actionActorId, Guid targetPlayerId)
 	{
 		var isPlayerMafia = Players
 			.Where(p => p.Id == targetPlayerId)

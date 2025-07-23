@@ -2,8 +2,7 @@
 using FluentResults;
 using Mafia.Games.Abstraction.Repositories;
 using Mafia.Games.Contracts.Commands;
-using Mafia.Games.Domain.Entities;
-using Mafia.Games.Domain.ValueObjects;
+using Mafia.Games.Domain.Models;
 using Mafia.Shared.Contracts.Messaging;
 
 namespace Mafia.Games.Application.Handlers.GameHandlers;

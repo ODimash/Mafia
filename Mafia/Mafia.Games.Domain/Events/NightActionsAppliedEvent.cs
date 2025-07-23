@@ -1,4 +1,4 @@
-﻿using Mafia.Games.Domain.ValueObjects;
+﻿using Mafia.Games.Domain.Models;
 using Mafia.Shared.Kernel;
 
 namespace Mafia.Games.Domain.Events;

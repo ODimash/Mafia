@@ -3,7 +3,6 @@ using FluentResults;
 using Mafia.Games.Contracts.Commands;
 using MediatR;
 using FluentResults.Extensions.AspNetCore;
-using Mafia.Games.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Validations.Rules;
 

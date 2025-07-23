@@ -1,12 +1,8 @@
-﻿
-using FluentResults;
-using Mafia.Games.Domain.Entities;
+﻿using FluentResults;
 using Mafia.Shared.Kernel;
 using Mafia.Shared.Kernel.Enums;
-using System.Reflection.Metadata.Ecma335;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace Mafia.Games.Domain.ValueObjects;
+namespace Mafia.Games.Domain.Models;
 
 public class GamePhase : ValueObject
 {

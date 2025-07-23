@@ -1,5 +1,5 @@
 using Mafia.Games.Abstraction.Repositories;
-using Mafia.Games.Domain.Entities;
+using Mafia.Games.Domain.Models;
 using System.Collections.Concurrent;
 
 namespace Mafia.Games.Infrastructure.Persistence.Repositories;

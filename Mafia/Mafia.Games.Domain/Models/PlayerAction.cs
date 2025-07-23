@@ -1,9 +1,8 @@
 ﻿using FluentResults;
-using Mafia.Games.Domain.Entities;
 using Mafia.Shared.Kernel;
 using Mafia.Shared.Kernel.Enums;
 
-namespace Mafia.Games.Domain.ValueObjects;
+namespace Mafia.Games.Domain.Models;
 
 public class PlayerAction : ValueObject
 {

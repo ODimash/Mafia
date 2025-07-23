@@ -1,4 +1,4 @@
-﻿using Mafia.Games.Domain.Entities;
+﻿using Mafia.Games.Domain.Models;
 
 namespace Mafia.Games.Abstraction.Repositories;
 
