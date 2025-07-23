@@ -5,7 +5,7 @@ using Mafia.Shared.Kernel.Enums;
 
 namespace Mafia.Games.Domain.Services;
 
-public class GameMessagingService : IGameMessageingService
+public class GameMessagingService : IGameMessagingService
 {
     public Result<GameChat> GetChatHeCanTell(Game game, Guid playerId)
     {

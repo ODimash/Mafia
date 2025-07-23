@@ -8,10 +8,12 @@ public class GameFinishedEvent : DomainEvent
 {
     public List<Player> Winners { get; }
     public SideType WinnerSide { get; }
+    public Guid GameId { get; }
 
-    public GameFinishedEvent(List<Player> winners, SideType winnerSide)
+    public GameFinishedEvent(List<Player> winners, SideType winnerSide, Guid gameId)
     {
         Winners = winners;
         WinnerSide = winnerSide;
+        GameId = gameId;
     }
 }

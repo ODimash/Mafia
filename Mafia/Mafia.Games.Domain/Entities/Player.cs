@@ -20,7 +20,7 @@ public class Player : Entity<Guid>
         IsWinner = isWinner;
     }
 
-    public Result Kill()
+    public Result TryKill()
     {
         if (IsKilled)
             return Result.Fail("The player already dead");
