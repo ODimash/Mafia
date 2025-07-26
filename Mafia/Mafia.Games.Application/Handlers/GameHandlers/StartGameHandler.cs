@@ -6,7 +6,7 @@ using Mafia.Games.Domain.Models;
 using Mafia.Shared.Contracts.Messaging;
 
 namespace Mafia.Games.Application.Handlers.GameHandlers;
-public class StartGameHandler : ICommandHandler<StartGameCommand, Result>
+public class StartGameHandler : ICommandHandler<StartGameCommand, Result<Guid>>
 {
 	private readonly IGameCommandRepository _gameRepository;
 
@@ -15,7 +15,7 @@ public class StartGameHandler : ICommandHandler<StartGameCommand, Result>
 		_gameRepository = gameRepository;
 	}
 
-	public async Task<Result> Handle(StartGameCommand request, CancellationToken cancellationToken)
+	public async Task<Result<Guid>> Handle(StartGameCommand request, CancellationToken cancellationToken)
 	{
 		var gameSettingsResult = GameSettings.Create(
 			request.GameSettings.DayDiscussionDuration,

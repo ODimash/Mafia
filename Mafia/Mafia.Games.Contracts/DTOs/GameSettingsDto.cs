@@ -1,6 +1,6 @@
 ﻿using Mafia.Shared.Kernel.Enums;
 
-namespace Mafia.Games.Contracts.CommandDTOs;
+namespace Mafia.Games.Contracts.DTOs;
 
 public class GameSettingsDto
 {

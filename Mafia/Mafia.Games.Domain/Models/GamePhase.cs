@@ -6,7 +6,7 @@ namespace Mafia.Games.Domain.Models;
 
 public class GamePhase : ValueObject
 {
-    private List<PlayerAction> _perfectActions = [];
+    private List<PlayerAction> _perfectActions;
 
     public PhaseType Type { get; }
     public List<Guid> PlayersForAction { get; }

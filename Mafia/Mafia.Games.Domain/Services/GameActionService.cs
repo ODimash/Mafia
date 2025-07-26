@@ -34,11 +34,11 @@ public class GameActionService : IGameActionService
 	}
 
 
-	public List<Player> GetPlayersForAction(Game game)
+	public List<Player> GetPlayersForActionAtNextPhase(Game game)
 	{
 		return game.Players
 			.Where(p => !p.IsKilled && p.Role.GetAvailableActionByRole()
-				.Any(a => a.GetPhase() == game.CurrentPhase.Type))
+				.Any(a => a.GetPhase() == game.CurrentPhase.Type.GetNextPhase()))
 			.ToList();
 	}
 

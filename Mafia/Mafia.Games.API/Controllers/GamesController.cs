@@ -21,7 +21,7 @@ public class GamesController : ControllerBase
     }
 
     [HttpPost("Start")]
-    public async Task<Result> StartGame(StartGameCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> StartGame(StartGameCommand request, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(request, cancellationToken);
         return result;

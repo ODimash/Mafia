@@ -14,8 +14,8 @@ public class GamePhaseService : IGamePhaseService
         _clockService = clockService;
     }
 
-    public bool IsCanProcessToNextPhase(Game game) => game.CurrentPhase.IsCanProceessToNextPhase().IsSuccess;
-    public Result<GamePhase> TryProcessToNextPhase(Game game, List<Guid> playersIdForAction)
+    public bool IsCanProceedToNextPhase(Game game) => game.CurrentPhase.IsCanProceessToNextPhase().IsSuccess;
+    public Result<GamePhase> TryProceedToNextPhase(Game game, List<Guid> playersIdForAction)
     {
         if (game.IsFinished)
             return Result.Fail("Game is already finished");
@@ -24,7 +24,7 @@ public class GamePhaseService : IGamePhaseService
         var duration = GetPhaseDuration(nextPhaseType, game.Settings);
         var nextEndTime = _clockService.CurrentDateTime.Add(duration);
 
-        return game.CurrentPhase.ProceedToNextPhase(playersIdForAction, nextEndTime);
+        return game.ProceedToNextPhase(playersIdForAction, nextEndTime);
     }
     
     private TimeSpan GetPhaseDuration(PhaseType phaseType, GameSettings settings) => phaseType switch

@@ -8,10 +8,11 @@ namespace Mafia.Games.Domain.Models;
 public class Game : AggregateRoot<Guid>
 {
 	public GameSettings Settings { get; private set; }
+	public int Day { get; private set; } = 0;
 	public IReadOnlyList<Player> Players { get; private set; }
 	public GamePhase CurrentPhase { get; private set; }
 	public bool IsFinished { get; private set; }
-	public SideType? Winner { get; private set; }
+	public SideType? WinnerSide { get; private set; }
 
 	private Game(
 		Guid id,
@@ -26,7 +27,7 @@ public class Game : AggregateRoot<Guid>
 		Players = players.AsReadOnly();
 		CurrentPhase = currentPhase;
 		IsFinished = isFinished;
-		Winner = winner;
+		WinnerSide = winner;
 	}
 
 	public static Result<Game> Create(
@@ -56,14 +57,16 @@ public class Game : AggregateRoot<Guid>
 		var phaseResult = GamePhase.Create(PhaseType.Night, firstPhaseEndTime, playersForAction.Select(p => p.Id).ToList());
 		if (phaseResult.IsFailed)
 			return phaseResult.ToResult<Game>();
-
-		return new Game(id, settings, players, phaseResult.Value);
+		
+		var game = new Game(id, settings, players, phaseResult.Value);
+		game.AddDomainEvent(new GameStartedDomainEvent(game.Id));
+		return Result.Ok(game);
 	}
 
 	internal void PerformAction(PlayerAction action)
 	{
 		CurrentPhase.AddPerfectAction(action);
-		AddDomainEvent(new ActionPerformedEvent(action));
+		AddDomainEvent(new ActionPerformedDomainEvent(action));
 	}
 
 	internal Result KillPlayer(Guid playerId, DeathReason reason, Guid? killerId = null)
@@ -86,15 +89,10 @@ public class Game : AggregateRoot<Guid>
 		return Result.Ok();
 	}
 
-	public Result ProceedToNextPhase(DateTime currentTime)
+	internal Result ProceedToNextPhase(List<Guid> playersIdForAction, DateTime nextEndTime)
 	{
 		if (IsFinished)
 			return Result.Fail("Game is already finished");
-
-		var nextPhaseType = CurrentPhase.Type.GetNextPhase();
-		var duration = GetPhaseDuration(nextPhaseType);
-		var nextEndTime = currentTime + duration;
-		var playersIdForAction = GetPlayersForAction(Players.ToList(), nextPhaseType).Select(p => p.Id).ToList();
 
 		var phaseResult = CurrentPhase.ProceedToNextPhase(playersIdForAction, nextEndTime);
 		if (phaseResult.IsFailed)
@@ -102,15 +100,18 @@ public class Game : AggregateRoot<Guid>
 
 		var oldPhaseType = CurrentPhase.Type;
 		CurrentPhase = phaseResult.Value;
-
+		
+		if (CurrentPhase.Type == PhaseType.Night)
+			Day++;
+		
 		AddDomainEvent(new GamePhaseChangedDomainEvent(Id, oldPhaseType, CurrentPhase.Type));
 		return Result.Ok();
 	}
 
-	public void FinishGame(SideType winningSide)
+	internal void FinishGame(SideType winningSide)
 	{
 		IsFinished = true;
-		Winner = winningSide;
+		WinnerSide = winningSide;
 
 		foreach (var player in Players)
 		{
@@ -118,7 +119,7 @@ public class Game : AggregateRoot<Guid>
 		}
 
 		var winners = Players.Where(predicate => predicate.IsWinner).ToList();
-		AddDomainEvent(new GameFinishedEvent(winners, winningSide, Id));
+		AddDomainEvent(new GameFinishedDomainEvent(winners, winningSide, Id));
 	}
 
 	public static List<Player> GetPlayersForAction(List<Player> players, PhaseType phaseType)
@@ -129,14 +130,6 @@ public class Game : AggregateRoot<Guid>
 			.ToList();
 	}
 
-	public TimeSpan GetPhaseDuration(PhaseType phaseType) => phaseType switch
-	{
-		PhaseType.Night => Settings.NightDuration,
-		PhaseType.DayDiscussion => Settings.DayDiscussionDuration,
-		PhaseType.DayVoting => Settings.VotingDuration,
-		_ => throw new ArgumentOutOfRangeException(nameof(phaseType))
-	};
-
 	internal void CheckIsPlayerMafia(Guid actionActorId, Guid targetPlayerId)
 	{
 		var isPlayerMafia = Players
@@ -144,6 +137,6 @@ public class Game : AggregateRoot<Guid>
 			.Select(p => p.Role.GetSide() == SideType.MafiaTeam)
 			.FirstOrDefault();
 
-		AddDomainEvent(new CheckedPlayerIsMafiaEvent(actionActorId, targetPlayerId, isPlayerMafia));
+		AddDomainEvent(new CheckedPlayerIsMafiaDomainEvent(actionActorId, targetPlayerId, isPlayerMafia));
 	}
 }

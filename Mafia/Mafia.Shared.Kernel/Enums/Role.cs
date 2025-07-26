@@ -4,7 +4,7 @@ public enum Role
 {
     Civil,
     Mafia,
-    Detective,
+    Sheriff,
     Doctor
 }
 
@@ -15,7 +15,7 @@ public static class RoleTypeExtensions
         Role.Mafia => SideType.MafiaTeam,
         Role.Civil => SideType.CivilianTeam,
         Role.Doctor => SideType.CivilianTeam,
-        Role.Detective => SideType.CivilianTeam,
+        Role.Sheriff => SideType.CivilianTeam,
         _ => SideType.Neutral
     };
 
@@ -26,7 +26,7 @@ public static class RoleTypeExtensions
     {
         Role.Civil => [ActionType.Vote],
         Role.Mafia => [ActionType.Vote, ActionType.VotingToKill],
-        Role.Detective => [ActionType.Vote, ActionType.Kill, ActionType.CheckIsMafia],
+        Role.Sheriff => [ActionType.Vote, ActionType.Kill, ActionType.CheckIsMafia],
         Role.Doctor => [ActionType.Vote, ActionType.Heal],
         _ => []
     };

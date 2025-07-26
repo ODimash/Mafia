@@ -2,9 +2,9 @@ using Mafia.Shared.Kernel;
 
 namespace Mafia.Games.Domain.Events;
 
-public class CheckedPlayerIsMafiaEvent : DomainEvent
+public class CheckedPlayerIsMafiaDomainEvent : DomainEvent
 {
-	public CheckedPlayerIsMafiaEvent(Guid checkerId, Guid targetId, bool isMafia)
+	public CheckedPlayerIsMafiaDomainEvent(Guid checkerId, Guid targetId, bool isMafia)
 	{
 		CheckerId = checkerId;
 		TargetId = targetId;
