@@ -5,7 +5,7 @@ using Mafia.Games.Domain.Services.Interfaces;
 using Mafia.Shared.Contracts.Messaging;
 using Mafia.Shared.Kernel.Enums;
 
-namespace Mafia.Games.Application.Handlers.GameHandlers;
+namespace Mafia.Games.Application.Handlers.ChatHandlers;
 
 public class GetPlayerCanTellChatHandler : IQueryHandler<GetPlayerCanTellChatQuery, Result<GameChat>>
 {

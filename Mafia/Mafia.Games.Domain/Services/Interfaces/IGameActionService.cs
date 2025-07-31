@@ -9,4 +9,6 @@ public interface IGameActionService
     Result PerformAction(Game game, Guid actorId, Guid targetId, ActionType actionType);
     void ApplyPhaseActions(Game game);
     List<Player> GetPlayersForActionAtNextPhase(Game game);
+    Result<List<ActionType>> GetPlayerActionsToDo(Game game, Guid playerId);
+    Result<PlayerAction?> GetPlayerPerformedActionAtThisPhase(Game game, Guid playerId);
 }

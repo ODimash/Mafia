@@ -41,6 +41,26 @@ public class GameActionService : IGameActionService
 				.Any(a => a.GetPhase() == game.CurrentPhase.Type.GetNextPhase()))
 			.ToList();
 	}
+	public Result<List<ActionType>> GetPlayerActionsToDo(Game game, Guid playerId)
+	{
+		var player = game.Players.SingleOrDefault(p => p.Id == playerId);
+		if (player == null)
+			return Result.Fail("Player is not part of this game");
+		
+		if (player.IsKilled)
+			return Result.Fail("Player is already killed");
+		
+		bool isPlayerAlreadyPerformAction = game.CurrentPhase.PerfectActions.Any(a => a.ActorId == player.Id);
+		if (isPlayerAlreadyPerformAction)
+			return Result.Fail("Player is already perform action");
+
+		return player.Role.GetAvailableActionByRole().ToList();
+	}
+	public Result<PlayerAction?> GetPlayerPerformedActionAtThisPhase(Game game, Guid playerId)
+	{
+		return game.CurrentPhase.PerfectActions.FirstOrDefault(a => a.ActorId == playerId);
+	}
+
 
 	public void ApplyPhaseActions(Game game)
 	{

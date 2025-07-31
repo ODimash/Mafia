@@ -10,10 +10,3 @@ namespace Mafia.Games.Contracts.Commands;
 
 public record StartGameCommand(GameSettingsDto GameSettings, List<Guid> PlayersIdentityId) : ICommand<Result<Guid>> { };
 
-
-
-
-
-// Internal команды для внутри модульных действии:
-
-public record PerformActionCommand(Guid GameId, Guid ActorId, Guid TargetId, ActionType ActionType) : ICommand<Result> { };

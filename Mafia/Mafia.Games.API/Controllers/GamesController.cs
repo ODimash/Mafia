@@ -3,6 +3,9 @@ using FluentResults;
 using Mafia.Games.Contracts.Commands;
 using MediatR;
 using FluentResults.Extensions.AspNetCore;
+using Mafia.Games.Application.Handlers.ActionHandlers.GetActionsToDo;
+using Mafia.Games.Application.Handlers.ActionHandlers.PerformAction;
+using Mafia.Games.Contracts.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Validations.Rules;
 
@@ -29,6 +32,13 @@ public class GamesController : ControllerBase
 
     [HttpPost("Action")]
     public async Task<Result> PerformAction(PerformActionCommand request, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(request, cancellationToken);
+        return result;
+    }
+
+    [HttpGet("GetActions")]
+    public async Task<Result<PlayerActionsToDoDto>> GetActionsToDo(GetActionsToDoQuery request, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(request, cancellationToken);
         return result;
