@@ -9,10 +9,10 @@ namespace Mafia.Games.Application.Handlers.ChatHandlers;
 
 public class GetPlayerCanTellChatHandler : IQueryHandler<GetPlayerCanTellChatQuery, Result<GameChat>>
 {
-    private IGameQueryRepository _repository;
+    private IGameCommandRepository _repository;
     private IGameMessagingService  _gameMessageingService;
     
-    public GetPlayerCanTellChatHandler(IGameQueryRepository repository, IGameMessagingService gameMessageingService)
+    public GetPlayerCanTellChatHandler(IGameCommandRepository repository, IGameMessagingService gameMessageingService)
     {
         _repository = repository;
         _gameMessageingService = gameMessageingService;

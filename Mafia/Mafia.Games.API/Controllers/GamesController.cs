@@ -30,14 +30,14 @@ public class GamesController : ControllerBase
         return result;
     }
 
-    [HttpPost("Action")]
+    [HttpPost("Actions/Perform")]
     public async Task<Result> PerformAction(PerformActionCommand request, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(request, cancellationToken);
         return result;
     }
 
-    [HttpGet("GetActions")]
+    [HttpGet("Actions")]
     public async Task<Result<PlayerActionsToDoDto>> GetActionsToDo(GetActionsToDoQuery request, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(request, cancellationToken);

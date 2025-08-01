@@ -9,12 +9,12 @@ namespace Mafia.Games.Application.Handlers.ActionHandlers.GetActionsToDo;
 
 public class GetActionsToDoHandler : IQueryHandler<GetActionsToDoQuery, Result<PlayerActionsToDoDto>>
 {
-	private readonly IGameQueryRepository _repository;
+	private readonly IGameCommandRepository _repository;
 	private readonly IMapper _mapper;
 	private readonly IGameActionService  _gameActionService;
 	
 	public GetActionsToDoHandler(
-		IGameQueryRepository repository, 
+		IGameCommandRepository repository, 
 		IMapper mapper, 
 		IGameActionService gameActionService)
 	{
