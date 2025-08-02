@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 // builder.Services.AddUsersModule();
 builder.Services.AddSwaggerGen();
-builder.Services.AddGamesModule();
+builder.Services.AddGamesModule(builder.Configuration);
 
 
 var app = builder.Build();

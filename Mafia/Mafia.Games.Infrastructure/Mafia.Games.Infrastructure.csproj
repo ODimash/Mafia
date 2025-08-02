@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Mafia.Games.Abstraction\Mafia.Games.Abstraction.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
+  </ItemGroup>
+
 </Project>

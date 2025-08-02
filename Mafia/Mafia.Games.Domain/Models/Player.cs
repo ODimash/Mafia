@@ -10,10 +10,12 @@ public class Player : Entity<Guid>
     public Role Role { get; }
     public bool IsKilled { get; private set; }
     public bool IsWinner { get; set; }
+    public Guid GameId { get; set; }
 
-    private Player(Guid identityId, Role role, bool isKilled = false, bool isWinner = false)
+    private Player(Guid identityId, Role role, Guid gameId, bool isKilled = false, bool isWinner = false)
     {
         Role = role;
+        GameId = gameId;
         IsKilled = isKilled;
         IdentityId = identityId;
         IsWinner = isWinner;
@@ -29,12 +31,12 @@ public class Player : Entity<Guid>
         return Result.Ok();
     }
 
-    public static Result<Player> Create(Guid identityId, Role role)
+    public static Result<Player> Create(Guid identityId, Role role, Guid gameId)
     {
         if (identityId == Guid.Empty)
             return Result.Fail("Identity ID can not be empty");
 
-        return new Player(identityId, role);
+        return new Player(identityId, role, gameId);
     }
 
 }

@@ -42,7 +42,7 @@ public class Game : AggregateRoot<Guid>
 		var players = new List<Player>(playerData.Count);
 		foreach (var (identityId, role) in playerData)
 		{
-			var playerResult = Player.Create(identityId, role);
+			var playerResult = Player.Create(identityId, role, id);
 			if (playerResult.IsFailed)
 				return playerResult.ToResult<Game>();
 			players.Add(playerResult.Value);

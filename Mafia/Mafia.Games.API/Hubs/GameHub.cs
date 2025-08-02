@@ -1,5 +1,8 @@
 using Mafia.Games.API.Extensions;
 using Mafia.Games.API.Tokens.GameToken;
+using Mafia.Games.Application.Handlers.PlayerHandlers.GetPlayerIdByIdentityId;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
 
@@ -7,33 +10,42 @@ namespace Mafia.Games.API.Hubs;
 
 public sealed class GameHub : Hub
 {
-	private readonly IGameContextAccessor  _gameContextAccessor;
+	private readonly IGameContextAccessor  _gameContext;
+	private readonly IMediator  _mediator;
 	
-	public GameHub(IGameContextAccessor gameContextAccessor)
+	public GameHub(IGameContextAccessor gameContextAccessor, IMediator mediator)
 	{
-		_gameContextAccessor = gameContextAccessor;
+		_gameContext = gameContextAccessor;
+		_mediator = mediator;
 	}
 
-	public override async Task OnConnectedAsync()
+	public async override Task OnConnectedAsync()
 	{
-		var httpContext = Context.GetHttpContext();
-		if (httpContext == null)
-			return;
-		
-		if (!httpContext.Request.Query.TryGetValue("gameId", out var gameIdAsString)) 
-			return;
-		
-		if (!Guid.TryParse(gameIdAsString, out var gameId))
+		Guid gameId = _gameContext.GameId ?? GetGameIdFromQuery();
+
+		if (gameId == Guid.Empty)
 			return;
 		
 		await Groups.AddToGroupAsync(Context.ConnectionId, gameId.ToString());
 		
-		if (httpContext.User.Identity == null || !httpContext.User.Identity.IsAuthenticated)
-			return;
+		if (_gameContext.IsPlayer)
+			await Groups.AddToGroupAsync(Context.ConnectionId, _gameContext.PlayerId!.Value.ToString());
 
-		var userId = httpContext.User.GetUserId();
-		
-		
 		await base.OnConnectedAsync();
+	}
+
+	private Guid GetGameIdFromQuery()
+	{
+		var httpContext = Context.GetHttpContext();
+		if (httpContext == null)
+			return Guid.Empty;
+		
+		if (!httpContext.Request.Query.TryGetValue("gameId", out var gameIdAsString)) 
+			return Guid.Empty;
+		
+		if (Guid.TryParse(gameIdAsString, out var gameId))
+			return gameId;
+		
+		return Guid.Empty;
 	}
 }
