@@ -1,5 +1,6 @@
 ﻿
 using FluentResults;
+using Mafia.Lobby.Domain.DomainEvents;
 using Mafia.Lobby.Domain.Enums;
 using Mafia.Shared.Kernel;
 
@@ -62,8 +63,10 @@ public class Room : AggregateRoot<Guid>
         if (isPrivate && password.Length > 32)
             return Result.Fail("Password cannot be longer than 32 characters");
         
-		return new Room(roomId, settings, ownerId, code, [ownerAsMemberResult.Value], name, isPrivate, password);
-	}
+		var room = new Room(roomId, settings, ownerId, code, [ownerAsMemberResult.Value], name, isPrivate, password);
+        room.AddDomainEvent(new RoomCreatedDomainEvent(roomId));
+        return room;
+    }
 
     public Result Join(Guid userId, string? password = null)
     {
@@ -90,6 +93,7 @@ public class Room : AggregateRoot<Guid>
             return createRoomParticipantResult.ToResult();
         
         _players.Add(createRoomParticipantResult.Value);
+        AddDomainEvent(new JoinedNewPlayerDomainEvent(Id, userId, createRoomParticipantResult.Value.Id));
         return Result.Ok();
     }
 
@@ -99,6 +103,7 @@ public class Room : AggregateRoot<Guid>
             return Result.Fail("Cannot leave a room that is not waiting");
         
         _players.RemoveAll(p => p.UserId == userId);
+        AddDomainEvent(new PlayerLeftRoomDomainEvent(Id, userId));
         return Result.Ok();
     }
     
@@ -109,6 +114,7 @@ public class Room : AggregateRoot<Guid>
 
         _players.RemoveAll(p => p.UserId == userId);
         _cickedPlayers.Add(userId);
+        AddDomainEvent(new PlayerKickedDomainEvent(Id, userId));
         return Result.Ok();
     }
 }
