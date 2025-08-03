@@ -8,9 +8,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mafia.Games.Abstraction\Mafia.Games.Abstraction.csproj" />
+    <ProjectReference Include="..\Mafia.Games.Application\Mafia.Games.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.7" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
   </ItemGroup>
 

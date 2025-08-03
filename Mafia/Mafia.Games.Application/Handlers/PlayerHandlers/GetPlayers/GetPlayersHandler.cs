@@ -7,13 +7,11 @@ namespace Mafia.Games.Application.Handlers.PlayerHandlers.GetPlayers;
 
 public class GetPlayersHandler : IQueryHandler<GetPlayersQuery,  List<PlayerDto>>
 {
-	private readonly IPlayerQueryRepository  _repository;
-	private readonly IMapper  _mapper;
+	private readonly IGameQueryRepository  _repository;
 	
-	public GetPlayersHandler(IPlayerQueryRepository repository, IMapper mapper)
+	public GetPlayersHandler(IGameQueryRepository repository)
 	{
 		_repository = repository;
-		_mapper = mapper;
 	}
 
 	public async Task<List<PlayerDto>> Handle(GetPlayersQuery request, CancellationToken cancellationToken)

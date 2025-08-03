@@ -1,4 +1,5 @@
 using Mafia.Games.Abstraction;
+using Mafia.Games.Abstraction.Services;
 using Mafia.Shared.Kernel;
 using Microsoft.Extensions.Logging;
 
@@ -7,14 +8,12 @@ namespace Mafia.Games.Infrastructure.Services;
 public class InMemoryAlarmService : IAlarmService
 {
 	private readonly ILogger<InMemoryAlarmService> _logger;
-	private readonly IServiceProvider _serviceProvider;
 	private static readonly List<ScheduledEvent> _events = [];
 	private static readonly object _lock = new();
 
-	public InMemoryAlarmService(ILogger<InMemoryAlarmService> logger, IServiceProvider serviceProvider)
+	public InMemoryAlarmService(ILogger<InMemoryAlarmService> logger)
 	{
 		_logger = logger;
-		_serviceProvider = serviceProvider;
 	}
 
 	public void SetAlarm(DateTime time, IDomainEvent domainEvent)

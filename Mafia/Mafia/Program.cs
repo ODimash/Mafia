@@ -3,6 +3,7 @@ using Mafia.User.API;
 using Mafia.User.API.Controllers;
 using Scalar.AspNetCore;
 using Mafia.Games.API.Controllers;
+using Mafia.Games.API.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,14 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-// builder.Services.AddUsersModule();
+
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddGamesModule(builder.Configuration);
 
-
 var app = builder.Build();
-// 2) Подключаем «модули»
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -25,9 +25,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
+app.MapHub<GameHub>("/hub/game");  
 app.Run();

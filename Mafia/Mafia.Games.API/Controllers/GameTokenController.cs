@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Mafia.Games.API.Controllers;
 
 [ApiController]
-[Route("api/game")]
+	[Route("api/Games")]
 public class GameTokenController : ControllerBase
 {
 	private readonly IGameTokenManager _tokenManager;
@@ -19,7 +19,7 @@ public class GameTokenController : ControllerBase
 		_mediator = mediator;
 	}
 
-	[HttpPost("{gameId}/token")]
+	[HttpPost("{gameId}/Token")]
 	public async Task<ActionResult<string>> GetToken(Guid gameId)
 	{
 		var userId = User.GetUserId();

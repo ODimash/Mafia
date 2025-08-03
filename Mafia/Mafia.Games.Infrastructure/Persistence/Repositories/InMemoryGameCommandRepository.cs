@@ -4,7 +4,7 @@ using System.Collections.Concurrent;
 
 namespace Mafia.Games.Infrastructure.Persistence.Repositories;
 
-public class GameCommandRepository : IGameCommandRepository
+public class InMemoryGameCommandRepository : IGameCommandRepository
 {
     private readonly ConcurrentDictionary<Guid, Game> _games = [];
 

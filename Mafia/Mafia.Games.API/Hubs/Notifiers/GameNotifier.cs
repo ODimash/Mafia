@@ -8,7 +8,6 @@ namespace Mafia.Games.API.Hubs.Notifiers;
 public class GameNotifier : IGameNotifier
 {
 	private readonly IHubContext<GameHub> _hubContext;
-
 	public GameNotifier(IHubContext<GameHub> hubContext)
 	{
 		_hubContext = hubContext;

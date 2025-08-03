@@ -34,7 +34,7 @@ public class GameSettings : ValueObject
         TimeSpan votingDuration,
         List<Role> roles)
     {
-        if (roles is null || roles.Count == 0)
+        if (roles.Count == 0)
             return Result.Fail("Role list must not be empty");
 
         int playersCount = roles.Count;

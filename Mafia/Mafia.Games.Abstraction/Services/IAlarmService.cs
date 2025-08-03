@@ -1,6 +1,6 @@
 using Mafia.Shared.Kernel;
 
-namespace Mafia.Games.Abstraction;
+namespace Mafia.Games.Abstraction.Services;
 
 public interface IAlarmService
 {

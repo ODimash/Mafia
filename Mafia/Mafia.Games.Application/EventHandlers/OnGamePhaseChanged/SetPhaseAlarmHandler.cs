@@ -1,5 +1,6 @@
 using Mafia.Games.Abstraction;
 using Mafia.Games.Abstraction.Repositories;
+using Mafia.Games.Abstraction.Services;
 using Mafia.Games.Domain.Events;
 using Mafia.Shared.Contracts.Messaging;
 using Microsoft.Extensions.Logging;

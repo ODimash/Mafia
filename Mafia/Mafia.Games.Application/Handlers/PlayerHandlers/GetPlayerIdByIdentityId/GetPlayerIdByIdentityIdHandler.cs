@@ -5,10 +5,10 @@ namespace Mafia.Games.Application.Handlers.PlayerHandlers.GetPlayerIdByIdentityI
 
 public class GetPlayerIdByIdentityIdHandler : IQueryHandler<GetPlayerIdByIdentityIdQuery, Guid>
 {
-	private readonly IPlayerQueryRepository  _playerQueryRepository;
+	private readonly IGameQueryRepository  _playerQueryRepository;
 	
 	
-	public GetPlayerIdByIdentityIdHandler(IPlayerQueryRepository playerQueryRepository)
+	public GetPlayerIdByIdentityIdHandler(IGameQueryRepository playerQueryRepository)
 	{
 		_playerQueryRepository = playerQueryRepository;
 	}
