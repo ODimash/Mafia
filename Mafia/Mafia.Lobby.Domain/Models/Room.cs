@@ -117,4 +117,31 @@ public class Room : AggregateRoot<Guid>
         AddDomainEvent(new PlayerKickedDomainEvent(Id, userId));
         return Result.Ok();
     }
+
+    public void UpdateSettings(RoomSettings settings)
+    {
+        Settings = settings;
+    }
+
+    public Result ChangePrivacy(bool isPrivate, string? password = null)
+    {
+        if (!IsPrivate)
+        {
+            IsPrivate = false;
+            Password = "";
+            return Result.Ok();
+        }
+        
+        if  (password == null)
+            return Result.Fail("Password cannot be empty");
+        
+        if (password.Length < 2)
+            return Result.Fail("Password must be at least 2");
+        
+        if (password.Length > 32)
+            return Result.Fail("Password cannot be longer than 32 characters");
+        
+        Password = password;
+        return Result.Ok();
+    }
 }

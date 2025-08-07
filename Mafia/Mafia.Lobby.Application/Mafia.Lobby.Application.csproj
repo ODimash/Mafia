@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Mafia.Lobby.Abstraction\Mafia.Lobby.Abstraction.csproj" />
+      <ProjectReference Include="..\Mafia.Lobby.Contracts\Mafia.Lobby.Contracts.csproj" />
+      <ProjectReference Include="..\Mafia.Lobby.Domain\Mafia.Lobby.Domain.csproj" />
+      <ProjectReference Include="..\Mafia.Shared.Contracts\Mafia.Shared.Contracts.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="15.0.1" />
+    </ItemGroup>
+
+</Project>
