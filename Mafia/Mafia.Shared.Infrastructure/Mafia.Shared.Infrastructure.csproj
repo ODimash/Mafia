@@ -8,7 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentResults.Extensions.AspNetCore" Version="0.2.0" />
+    <ProjectReference Include="..\Mafia.Shared.Contracts\Mafia.Shared.Contracts.csproj" />
+    <ProjectReference Include="..\Mafia.Shared.Kernel\Mafia.Shared.Kernel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
 </Project>

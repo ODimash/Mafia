@@ -10,5 +10,9 @@
 		<ProjectReference Include="..\Mafia.Games.Contracts\Mafia.Games.Contracts.csproj" />
 		<ProjectReference Include="..\Mafia.Games.Domain\Mafia.Games.Domain.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Services\" />
+	</ItemGroup>
 	
 </Project>

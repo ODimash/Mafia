@@ -5,6 +5,7 @@ namespace Mafia.Lobby.Application.Handlers.RoomHandlers.StartGame;
 
 public class StartGameCommand : ICommand<Result<Guid>>
 {
-	public Guid RoomId { get; set; }
+	public required Guid RoomId { get; set; }
 	public Guid UserId { get; set; }
+	public bool IsAutoStart { get; set; } = false;
 }

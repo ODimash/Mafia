@@ -1,9 +1,9 @@
 using Mafia.Games.Abstraction;
 using Mafia.Games.Abstraction.Repositories;
-using Mafia.Games.Abstraction.Services;
 using Mafia.Games.Domain.Events;
 using Mafia.Shared.Contracts.Messaging;
 using Mafia.Shared.Kernel;
+using Mafia.Shared.Kernel.Services;
 using Microsoft.Extensions.Logging;
 
 namespace Mafia.Games.Application.EventHandlers.OnGameStarted;

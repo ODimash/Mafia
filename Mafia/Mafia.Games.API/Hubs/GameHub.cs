@@ -1,22 +1,15 @@
-using Mafia.Games.API.Extensions;
 using Mafia.Games.API.Tokens.GameToken;
-using Mafia.Games.Application.Handlers.PlayerHandlers.GetPlayerIdByIdentityId;
-using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
-using System.Security.Claims;
 
 namespace Mafia.Games.API.Hubs;
 
 public sealed class GameHub : Hub
 {
 	private readonly IGameContextAccessor  _gameContext;
-	private readonly IMediator  _mediator;
 	
-	public GameHub(IGameContextAccessor gameContextAccessor, IMediator mediator)
+	public GameHub(IGameContextAccessor gameContextAccessor)
 	{
 		_gameContext = gameContextAccessor;
-		_mediator = mediator;
 	}
 
 	public async override Task OnConnectedAsync()

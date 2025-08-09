@@ -2,9 +2,9 @@ using Mafia.Shared.Kernel;
 
 namespace Mafia.Lobby.Domain.DomainEvents;
 
-public class RoomPricacyChangedDomainEvent : DomainEvent
+public class RoomPrivacyChangedDomainEvent : DomainEvent
 {
-	public RoomPricacyChangedDomainEvent(Guid roomId, bool isPrivate, string? password)
+	public RoomPrivacyChangedDomainEvent(Guid roomId, bool isPrivate, string? password)
 	{
 		RoomId = roomId;
 		IsPrivate = isPrivate;

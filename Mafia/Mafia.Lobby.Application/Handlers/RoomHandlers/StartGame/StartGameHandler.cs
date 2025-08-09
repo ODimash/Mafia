@@ -31,7 +31,7 @@ public class StartGameHandler : ICommandHandler<StartGameCommand, Result<Guid>>
 		if (room == null)
 			return Result.Fail("Room not found");
 
-		if (room.OwnerId != request.UserId)
+		if (room.OwnerId != request.UserId && !request.IsAutoStart)
 			return Result.Fail("Only owner can start a game");
 		
 		var roles = _gameRolesService.GenerateRolesOfEnabledRoles(room.Settings.EnabledRoles, room.Players.Count);
@@ -43,6 +43,7 @@ public class StartGameHandler : ICommandHandler<StartGameCommand, Result<Guid>>
 		var command = new Mafia.Games.Contracts.Commands.StartGameCommand(gameSettings, room.Players.Select(p => p.Id).ToList());
 		return await _mediator.Send(command, cancellationToken);
 	}
+	
 	private GameSettingsDto GenerateGameSettings(RoomSettings roomSettings, List<Role> roles)
 	{
 		return new GameSettingsDto

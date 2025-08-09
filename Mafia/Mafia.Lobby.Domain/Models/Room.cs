@@ -17,6 +17,7 @@ public class Room : AggregateRoot<Guid>
 	public RoomCode Code { get; }
 	public RoomState State { get; private set; }
 	public RoomName Name { get; private set; }
+	public DateTime? StartTime { get; private set; }
 
 	private Room(
 		Guid id,
@@ -93,7 +94,16 @@ public class Room : AggregateRoot<Guid>
 			return createRoomParticipantResult.ToResult();
 
 		_players.Add(createRoomParticipantResult.Value);
+
+
 		AddDomainEvent(new JoinedNewPlayerDomainEvent(Id, userId, createRoomParticipantResult.Value.Id));
+
+		if (_players.Count >= Settings.MinPlayersCount && StartTime == null)
+		{
+			StartTime = DateTime.UtcNow.AddSeconds(30);
+			AddDomainEvent(new GameWillStartDomainEvent(Id, StartTime.Value));
+		}
+
 		return Result.Ok();
 	}
 
@@ -104,6 +114,13 @@ public class Room : AggregateRoot<Guid>
 
 		_players.RemoveAll(p => p.UserId == userId);
 		AddDomainEvent(new PlayerLeftRoomDomainEvent(Id, userId));
+
+		if (_players.Count < Settings.MinPlayersCount && StartTime != null)
+		{
+			StartTime = null;
+			AddDomainEvent(new AutoStartGameCancelledDomainEvent(Id));
+		}
+
 		return Result.Ok();
 	}
 
@@ -115,6 +132,13 @@ public class Room : AggregateRoot<Guid>
 		_players.RemoveAll(p => p.UserId == userId);
 		_cickedPlayers.Add(userId);
 		AddDomainEvent(new PlayerKickedDomainEvent(Id, userId));
+
+		if (_players.Count < Settings.MinPlayersCount && StartTime != null)
+		{
+			StartTime = null;
+			AddDomainEvent(new AutoStartGameCancelledDomainEvent(Id));
+		}
+
 		return Result.Ok();
 	}
 
@@ -122,6 +146,12 @@ public class Room : AggregateRoot<Guid>
 	{
 		Settings = settings;
 		AddDomainEvent(new RoomSettingsUpdatedDomainEvent(Id, settings));
+
+		if (_players.Count < Settings.MinPlayersCount && StartTime != null)
+		{
+			StartTime = null;
+			AddDomainEvent(new AutoStartGameCancelledDomainEvent(Id));
+		}
 	}
 
 	public Result ChangePrivacy(bool isPrivate, string? password = null)
@@ -143,7 +173,7 @@ public class Room : AggregateRoot<Guid>
 			return Result.Fail("Password cannot be longer than 32 characters");
 
 		Password = password;
-		AddDomainEvent(new RoomPricacyChangedDomainEvent(Id, isPrivate, Password));
+		AddDomainEvent(new RoomPrivacyChangedDomainEvent(Id, isPrivate, Password));
 		return Result.Ok();
 	}
 }

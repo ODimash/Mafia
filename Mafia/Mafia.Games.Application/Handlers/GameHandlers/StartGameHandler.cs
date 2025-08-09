@@ -36,6 +36,6 @@ public class StartGameHandler : ICommandHandler<StartGameCommand, Result<Guid>>
 			return gameResult.ToResult();
 
 		await _gameRepository.AddGame(gameResult.Value, cancellationToken);
-		return Result.Ok();
+		return Result.Ok(gameResult.Value.Id);
 	}
 }

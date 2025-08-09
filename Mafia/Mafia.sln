@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mafia.Lobby.Contracts", "Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mafia.Lobby.Infrasctructure", "Mafia.Lobby.Infrasctructure\Mafia.Lobby.Infrasctructure.csproj", "{323EBAF4-1AB0-40C1-8D94-505A6CC3AFE5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mafia.Lobby.API", "Mafia.Lobby.API\Mafia.Lobby.API.csproj", "{617440EB-5A43-475C-86EF-44509F704166}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,10 @@ Global
 		{323EBAF4-1AB0-40C1-8D94-505A6CC3AFE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{323EBAF4-1AB0-40C1-8D94-505A6CC3AFE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{323EBAF4-1AB0-40C1-8D94-505A6CC3AFE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{617440EB-5A43-475C-86EF-44509F704166}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{617440EB-5A43-475C-86EF-44509F704166}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{617440EB-5A43-475C-86EF-44509F704166}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{617440EB-5A43-475C-86EF-44509F704166}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -154,6 +160,7 @@ Global
 		{88377F0A-5C71-4B1F-B24F-DCE7F2B5F2D6} = {BFDA5A71-F7D0-4648-9B67-1824A20DBC51}
 		{ADD73BBC-0A98-44B8-BFE2-F6B7C5A70F29} = {BFDA5A71-F7D0-4648-9B67-1824A20DBC51}
 		{323EBAF4-1AB0-40C1-8D94-505A6CC3AFE5} = {BFDA5A71-F7D0-4648-9B67-1824A20DBC51}
+		{617440EB-5A43-475C-86EF-44509F704166} = {BFDA5A71-F7D0-4648-9B67-1824A20DBC51}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A17D8CA-2534-4BC0-815C-D401CAADBFEA}

@@ -1,10 +1,10 @@
 using Mafia.Games.Abstraction;
 using Mafia.Games.Abstraction.Repositories;
-using Mafia.Games.Abstraction.Services;
 using Mafia.Games.Contracts.InegrationEvents;
 using Mafia.Games.Domain.Events;
 using Mafia.Games.Domain.Services.Interfaces;
 using Mafia.Shared.Contracts.Messaging;
+using Mafia.Shared.Kernel.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

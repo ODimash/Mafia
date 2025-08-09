@@ -1,15 +1,15 @@
 using Mafia.Games.Abstraction.Notifiers;
 using Mafia.Games.Abstraction.Repositories;
-using Mafia.Games.Abstraction.Services;
 using Mafia.Games.API.Hubs.Notifiers;
 using Mafia.Games.API.Tokens.GameToken;
 using Mafia.Games.Application.Handlers.GameHandlers;
 using Mafia.Games.Application.Mappers;
 using Mafia.Games.Domain.Services;
 using Mafia.Games.Domain.Services.Interfaces;
-using Mafia.Games.Infrastructure.BackgroundServices;
 using Mafia.Games.Infrastructure.Persistence.Repositories;
-using Mafia.Games.Infrastructure.Services;
+using Mafia.Shared.Kernel.Services;
+using Mefia.Shared.Infrastructure.BackgroundServices;
+using Mefia.Shared.Infrastructure.Services.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -1,9 +1,8 @@
-using Mafia.Games.Abstraction;
-using Mafia.Games.Abstraction.Services;
 using Mafia.Shared.Kernel;
+using Mafia.Shared.Kernel.Services;
 using Microsoft.Extensions.Logging;
 
-namespace Mafia.Games.Infrastructure.Services;
+namespace Mefia.Shared.Infrastructure.Services.Services;
 
 public class InMemoryAlarmService : IAlarmService
 {
@@ -31,6 +30,13 @@ public class InMemoryAlarmService : IAlarmService
 	public void SetTimer(TimeSpan interval, IDomainEvent domainEvent)
 	{
 		SetAlarm(DateTime.UtcNow + interval, domainEvent);
+	}
+	public void CancellAlarmsByEventTipe(Type type)
+	{
+		lock (_lock)
+		{
+			_events.RemoveAll(x => x.Event.GetType() == type);	
+		}
 	}
 
 	// Вызывается из фонового сервиса
