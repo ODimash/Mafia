@@ -10,23 +10,17 @@ namespace Mafia.Games.Application.EventHandlers.OnGameStarted;
 public class SendNotificationHandler : IDomainEventHandler<GameStartedDomainEvent>
 {
 	private readonly IGameNotifier _gameNotifier;
-	private readonly IMediator _mediator;
 	private readonly ILogger<SendNotificationHandler> _logger;
 
-	public SendNotificationHandler(IGameNotifier gameNotifier, IMediator mediator, ILogger<SendNotificationHandler> logger)
+	public SendNotificationHandler(IGameNotifier gameNotifier, ILogger<SendNotificationHandler> logger)
 	{
 		_gameNotifier = gameNotifier;
-		_mediator = mediator;
 		_logger = logger;
 	}
 
 
 	public Task Handle(DomainEventNotification<GameStartedDomainEvent> notification, CancellationToken cancellationToken)
 	{
-		_logger.LogInformation("Handling game started");
-		
-		return Task.WhenAll(
-			_gameNotifier.NotifyGameStarted(notification.DomainEvent.GameId),
-			_mediator.Publish(new GameStartedEvent(notification.DomainEvent.GameId)));
+		return _gameNotifier.NotifyGameStarted(notification.DomainEvent.GameId);
 	}
 }

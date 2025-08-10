@@ -59,7 +59,7 @@ public class Game : AggregateRoot<Guid>
 			return phaseResult.ToResult<Game>();
 		
 		var game = new Game(id, settings, players, phaseResult.Value);
-		game.AddDomainEvent(new GameStartedDomainEvent(game.Id));
+		game.AddDomainEvent(new GameStartedDomainEvent(game.Id, game.Players.ToList()));
 		return Result.Ok(game);
 	}
 

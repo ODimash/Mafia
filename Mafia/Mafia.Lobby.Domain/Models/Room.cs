@@ -11,6 +11,7 @@ public class Room : AggregateRoot<Guid>
 	private readonly List<Guid> _cickedPlayers = [];
 	public IReadOnlyList<RoomParticipant> Players => _players;
 	public RoomSettings Settings { get; private set; }
+	public bool GameStarted { get; private set; } = false;
 	public Guid OwnerId { get; private set; }
 	public string Password { get; private set; }
 	public bool IsPrivate { get; private set; }
@@ -174,6 +175,24 @@ public class Room : AggregateRoot<Guid>
 
 		Password = password;
 		AddDomainEvent(new RoomPrivacyChangedDomainEvent(Id, isPrivate, Password));
+		return Result.Ok();
+	}
+
+	public Result StartGame()
+	{
+		if (GameStarted) 
+			return Result.Fail("Cannot start a game that is already started");
+		
+		GameStarted = true;
+		return Result.Ok();
+	}
+
+	public Result StopGame()
+	{
+		if (!GameStarted)
+			return Result.Fail("Cannot stop a game that is not started");
+		
+		GameStarted = false;
 		return Result.Ok();
 	}
 }

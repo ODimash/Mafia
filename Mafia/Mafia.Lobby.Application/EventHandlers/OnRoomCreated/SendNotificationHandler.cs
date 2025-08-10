@@ -6,15 +6,15 @@ namespace Mafia.Lobby.Application.EventHandlers.OnRoomCreated;
 
 public class SendNotificationHandler : IDomainEventHandler<RoomCreatedDomainEvent>
 {
-	private readonly IRoomNotifier _roomNotifier;
+	private readonly ILobbyNotifier _lobbyNotifier;
 	
-	public SendNotificationHandler(IRoomNotifier roomNotifier)
+	public SendNotificationHandler(ILobbyNotifier lobbyNotifier)
 	{
-		_roomNotifier = roomNotifier;
+		_lobbyNotifier = lobbyNotifier;
 	}
 
 	public Task Handle(DomainEventNotification<RoomCreatedDomainEvent> notification, CancellationToken cancellationToken)
 	{
-		return _roomNotifier.NotifyNewRoom(notification.DomainEvent.RoomId);
+		return _lobbyNotifier.NotifyNewRoom(notification.DomainEvent.RoomId);
 	}
 }

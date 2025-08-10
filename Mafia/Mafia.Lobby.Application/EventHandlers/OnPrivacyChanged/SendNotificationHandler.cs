@@ -6,15 +6,15 @@ namespace Mafia.Lobby.Application.EventHandlers.OnPrivacyChanged;
 
 public class SendNotificationHandler : IDomainEventHandler<RoomPrivacyChangedDomainEvent>
 {
-	private readonly IRoomNotifier _roomNotifier;
+	private readonly ILobbyNotifier _lobbyNotifier;
 	
-	public SendNotificationHandler(IRoomNotifier roomNotifier)
+	public SendNotificationHandler(ILobbyNotifier lobbyNotifier)
 	{
-		_roomNotifier = roomNotifier;
+		_lobbyNotifier = lobbyNotifier;
 	}
 
 	public Task Handle(DomainEventNotification<RoomPrivacyChangedDomainEvent> notification, CancellationToken cancellationToken)
 	{
-		return _roomNotifier.NotifyChangedPrivacy(notification.DomainEvent.RoomId, notification.DomainEvent.IsPrivate);
+		return _lobbyNotifier.NotifyChangedPrivacy(notification.DomainEvent.RoomId, notification.DomainEvent.IsPrivate);
 	}
 }
