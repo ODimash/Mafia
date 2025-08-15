@@ -66,7 +66,7 @@ public class Room : AggregateRoot<Guid>
 			return Result.Fail("Password cannot be longer than 32 characters");
 
 		var room = new Room(roomId, settings, ownerId, code, [ownerAsMemberResult.Value], name, isPrivate, password);
-		room.AddDomainEvent(new RoomCreatedDomainEvent(roomId));
+		room.AddDomainEvent(new RoomCreatedDomainEvent(roomId, isPrivate));
 		return room;
 	}
 

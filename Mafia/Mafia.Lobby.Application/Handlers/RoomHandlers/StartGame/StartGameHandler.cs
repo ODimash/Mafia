@@ -1,11 +1,10 @@
 using FluentResults;
-using Mafia.Games.Contracts.DTOs;
-using Mafia.Games.Domain.Models;
 using Mafia.Lobby.Abstraction.Repositories;
 using Mafia.Lobby.Domain.Models;
 using Mafia.Lobby.Domain.Services;
+using Mafia.Shared.Contracts.DTOs;
+using Mafia.Shared.Contracts.DTOs.Games;
 using Mafia.Shared.Contracts.Messaging;
-using Mafia.Shared.Kernel.Constants;
 using Mafia.Shared.Kernel.Enums;
 using MediatR;
 
@@ -40,7 +39,7 @@ public class StartGameHandler : ICommandHandler<StartGameCommand, Result<Guid>>
 		
 		var gameSettings = GenerateGameSettings(room.Settings, roles.Value);
 				
-		var command = new Mafia.Games.Contracts.Commands.StartGameCommand(gameSettings, room.Players.Select(p => p.Id).ToList());
+		var command = new Shared.Contracts.Commands.StartGameCommand(gameSettings, room.Players.Select(p => p.Id).ToList());
 		return await _mediator.Send(command, cancellationToken);
 	}
 	

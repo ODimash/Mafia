@@ -1,8 +1,9 @@
 using AutoMapper;
 using FluentResults;
 using Mafia.Games.Abstraction.Repositories;
-using Mafia.Games.Contracts.DTOs;
 using Mafia.Games.Domain.Services.Interfaces;
+using Mafia.Shared.Contracts.DTOs;
+using Mafia.Shared.Contracts.DTOs.Games;
 using Mafia.Shared.Contracts.Messaging;
 
 namespace Mafia.Games.Application.Handlers.ActionHandlers.GetActionsToDo;

@@ -1,7 +1,8 @@
 using AutoMapper;
-using Mafia.Games.Contracts.DTOs;
-using Mafia.Games.Contracts.InegrationEvents;
 using Mafia.Games.Domain.Events;
+using Mafia.Shared.Contracts.DTOs;
+using Mafia.Shared.Contracts.DTOs.Games;
+using Mafia.Shared.Contracts.InegrationEvents;
 using Mafia.Shared.Contracts.Messaging;
 
 namespace Mafia.Games.Application.EventHandlers.OnGameStarted;

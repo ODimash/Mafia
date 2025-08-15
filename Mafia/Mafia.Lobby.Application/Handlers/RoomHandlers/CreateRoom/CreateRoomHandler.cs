@@ -9,13 +9,11 @@ namespace Mafia.Lobby.Application.Handlers.RoomHandlers.CreateRoom;
 public class CreateRoomHandler : ICommandHandler<CreateRoomCommand, Result<Guid>>
 {
 	private readonly IRoomRepository _repository;
-	private readonly IMapper _mapper;
-	private readonly Random _random =  new Random();
+	private readonly Random _random =  new();
 	
-	public CreateRoomHandler(IRoomRepository repository, IMapper mapper)
+	public CreateRoomHandler(IRoomRepository repository)
 	{
 		_repository = repository;
-		_mapper = mapper;
 	}
 
 	public async Task<Result<Guid>> Handle(CreateRoomCommand request, CancellationToken cancellationToken)
@@ -39,7 +37,7 @@ public class CreateRoomHandler : ICommandHandler<CreateRoomCommand, Result<Guid>
 		if (roomCode.IsFailed)
 			throw new Exception(roomCode.Errors.Select(error => error.Message).FirstOrDefault());
 		
-		var roomName = RoomName.Create(roomCodeAsStr);
+		var roomName = RoomName.Create(request.RoomName);
 		
 		var room = Room.Create(
 			settingsResult.Value, 
@@ -59,9 +57,8 @@ public class CreateRoomHandler : ICommandHandler<CreateRoomCommand, Result<Guid>
 	private string GenerateRoomCode()
 	{
 		const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		var random = new Random();
 		return new string(Enumerable.Range(0, 6)
-			.Select(_ => chars[random.Next(chars.Length)]).ToArray());
+			.Select(_ => chars[_random.Next(chars.Length)]).ToArray());
 	}
 
 }

@@ -1,7 +1,6 @@
 using Mafia.Shared.Kernel.Enums;
-using System.Diagnostics.CodeAnalysis;
 
-namespace Mafia.Games.Contracts.DTOs;
+namespace Mafia.Shared.Contracts.DTOs.Games;
 
 public class PlayerActionsToDoDto
 {

@@ -1,9 +1,10 @@
 using AutoMapper;
 using Mafia.Games.Abstraction.Notifiers;
 using Mafia.Games.Abstraction.Repositories;
-using Mafia.Games.Contracts.DTOs;
-using Mafia.Games.Contracts.InegrationEvents;
 using Mafia.Games.Domain.Events;
+using Mafia.Shared.Contracts.DTOs;
+using Mafia.Shared.Contracts.DTOs.Games;
+using Mafia.Shared.Contracts.InegrationEvents;
 using Mafia.Shared.Contracts.Messaging;
 using MediatR;
 using Microsoft.Extensions.Logging;

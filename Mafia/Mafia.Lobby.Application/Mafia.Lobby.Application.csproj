@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Mafia.Games.Contracts\Mafia.Games.Contracts.csproj" />
       <ProjectReference Include="..\Mafia.Lobby.Abstraction\Mafia.Lobby.Abstraction.csproj" />
       <ProjectReference Include="..\Mafia.Lobby.Contracts\Mafia.Lobby.Contracts.csproj" />
       <ProjectReference Include="..\Mafia.Lobby.Domain\Mafia.Lobby.Domain.csproj" />

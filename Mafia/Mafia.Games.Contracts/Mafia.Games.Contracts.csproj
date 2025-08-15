@@ -15,4 +15,11 @@
         <InternalsVisibleTo Include="..\Mafia.Game.Application\Mafia.Game.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Commands\" />
+      <Folder Include="DTOs\" />
+      <Folder Include="InegrationEvents\" />
+      <Folder Include="Queries\" />
+    </ItemGroup>
+
 </Project>

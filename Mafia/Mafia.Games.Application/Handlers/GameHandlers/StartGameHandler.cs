@@ -1,9 +1,9 @@
 ﻿
 using FluentResults;
 using Mafia.Games.Abstraction.Repositories;
-using Mafia.Games.Contracts.Commands;
 using Mafia.Games.Domain.Models;
 using Mafia.Games.Domain.Services.Interfaces;
+using Mafia.Shared.Contracts.Commands;
 using Mafia.Shared.Contracts.Messaging;
 
 namespace Mafia.Games.Application.Handlers.GameHandlers;

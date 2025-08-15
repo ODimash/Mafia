@@ -1,7 +1,6 @@
 
 using FluentResults;
-using Mafia.Lobby.Contracts.DTOs;
-using Mafia.Lobby.Domain.Models;
+using Mafia.Shared.Contracts.DTOs.Lobby;
 using Mafia.Shared.Contracts.Messaging;
 
 namespace Mafia.Lobby.Application.Handlers.RoomHandlers.UpdateSettings;

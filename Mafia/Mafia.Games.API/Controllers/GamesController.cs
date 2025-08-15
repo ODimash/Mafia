@@ -1,10 +1,11 @@
 
 using FluentResults;
-using Mafia.Games.Contracts.Commands;
 using MediatR;
 using Mafia.Games.Application.Handlers.ActionHandlers.GetActionsToDo;
 using Mafia.Games.Application.Handlers.ActionHandlers.PerformAction;
-using Mafia.Games.Contracts.DTOs;
+using Mafia.Shared.Contracts.Commands;
+using Mafia.Shared.Contracts.DTOs;
+using Mafia.Shared.Contracts.DTOs.Games;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Validations.Rules;
 

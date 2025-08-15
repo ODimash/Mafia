@@ -1,6 +1,6 @@
 using Mafia.Games.Abstraction.Notifiers;
-using Mafia.Games.Contracts.InegrationEvents;
 using Mafia.Games.Domain.Events;
+using Mafia.Shared.Contracts.InegrationEvents;
 using Mafia.Shared.Contracts.Messaging;
 
 namespace Mafia.Games.Application.EventHandlers.OnPhaseActionsApplied;

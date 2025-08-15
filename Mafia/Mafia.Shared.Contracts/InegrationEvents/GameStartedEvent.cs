@@ -1,7 +1,8 @@
-using Mafia.Games.Contracts.DTOs;
+using Mafia.Shared.Contracts.DTOs;
+using Mafia.Shared.Contracts.DTOs.Games;
 using Mafia.Shared.Contracts.Messaging;
 
-namespace Mafia.Games.Contracts.InegrationEvents;
+namespace Mafia.Shared.Contracts.InegrationEvents;
 
 public class GameStartedEvent : IEvent
 {

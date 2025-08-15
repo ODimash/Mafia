@@ -1,10 +1,9 @@
-﻿
-using FluentResults;
-using Mafia.Games.Contracts.DTOs;
+﻿using FluentResults;
+using Mafia.Shared.Contracts.DTOs;
+using Mafia.Shared.Contracts.DTOs.Games;
 using Mafia.Shared.Contracts.Messaging;
-using Mafia.Shared.Kernel.Enums;
 
-namespace Mafia.Games.Contracts.Commands;
+namespace Mafia.Shared.Contracts.Commands;
 
 // Публичные команды для межмодульного взаимодействия:
 

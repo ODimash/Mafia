@@ -1,6 +1,6 @@
 using Mafia.Shared.Kernel.Enums;
 
-namespace Mafia.Lobby.Contracts.DTOs;
+namespace Mafia.Shared.Contracts.DTOs.Lobby;
 
 public class RoomSettingsDto
 {

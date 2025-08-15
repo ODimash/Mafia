@@ -1,6 +1,6 @@
 using Mafia.Shared.Kernel.Enums;
 
-namespace Mafia.Games.Contracts.DTOs;
+namespace Mafia.Shared.Contracts.DTOs.Games;
 
 public class GameResult
 {

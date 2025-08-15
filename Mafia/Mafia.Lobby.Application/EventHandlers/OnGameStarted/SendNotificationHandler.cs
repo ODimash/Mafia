@@ -1,5 +1,5 @@
-using Mafia.Games.Contracts.InegrationEvents;
 using Mafia.Lobby.Abstraction.Notifiers;
+using Mafia.Shared.Contracts.InegrationEvents;
 using Mafia.Shared.Contracts.Messaging;
 using MediatR;
 

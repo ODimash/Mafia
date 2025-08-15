@@ -1,8 +1,8 @@
 using FluentResults;
 using Mafia.Games.Abstraction.Repositories;
-using Mafia.Games.Contracts.Queries;
 using Mafia.Games.Domain.Services.Interfaces;
 using Mafia.Shared.Contracts.Messaging;
+using Mafia.Shared.Contracts.Queries;
 using Mafia.Shared.Kernel.Enums;
 
 namespace Mafia.Games.Application.Handlers.ChatHandlers;

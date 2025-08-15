@@ -7,8 +7,8 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Mafia.Games.Contracts\Mafia.Games.Contracts.csproj" />
 		<ProjectReference Include="..\Mafia.Games.Domain\Mafia.Games.Domain.csproj" />
+		<ProjectReference Include="..\Mafia.Shared.Contracts\Mafia.Shared.Contracts.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
