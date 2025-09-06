@@ -18,6 +18,7 @@
     <ProjectReference Include="..\Mafia.Games.Abstraction\Mafia.Games.Abstraction.csproj" />
     <ProjectReference Include="..\Mafia.Games.Application\Mafia.Games.Application.csproj" />
     <ProjectReference Include="..\Mafia.Games.Infrastructure\Mafia.Games.Infrastructure.csproj" />
+    <ProjectReference Include="..\Mafia.Shared.API\Mafia.Shared.API.csproj" />
     <ProjectReference Include="..\Mafia.Shared.Infrastructure\Mafia.Shared.Infrastructure.csproj" />
   </ItemGroup>
 

@@ -4,6 +4,7 @@ using Mafia.User.API.Controllers;
 using Scalar.AspNetCore;
 using Mafia.Games.API.Controllers;
 using Mafia.Games.API.Hubs;
+using Mafia.Lobby.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddGamesModule(builder.Configuration);
+builder.Services.AddLobbyModule();
 
 var app = builder.Build();
 

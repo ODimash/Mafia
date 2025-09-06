@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mafia.Games.API\Mafia.Games.API.csproj" />
+    <ProjectReference Include="..\Mafia.Lobby.API\Mafia.Lobby.API.csproj" />
     <ProjectReference Include="..\Mafia.User.API\Mafia.User.API.csproj" />
   </ItemGroup>
 

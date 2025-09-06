@@ -8,6 +8,9 @@ public interface IGameContextAccessor
 	Guid? GameId { get; }
 	Guid? PlayerId { get; }
 	bool IsPlayer { get; }
+	
+	Guid GetPlayerId();
+	Guid GetGameId();
 }
 
 public class GameContextAccessor : IGameContextAccessor
@@ -15,6 +18,8 @@ public class GameContextAccessor : IGameContextAccessor
 	public Guid? GameId { get; }
 	public Guid? PlayerId { get; }
 	public bool IsPlayer { get; }
+	public Guid GetPlayerId() => PlayerId ?? Guid.Empty;
+	public Guid GetGameId() => GameId ?? Guid.Empty;
 
 	public GameContextAccessor(IHttpContextAccessor accessor, IGameTokenManager tokenManager)
 	{

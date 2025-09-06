@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Mafia.Lobby.Abstraction\Mafia.Lobby.Abstraction.csproj" />
       <ProjectReference Include="..\Mafia.Lobby.Application\Mafia.Lobby.Application.csproj" />
+      <ProjectReference Include="..\Mafia.Lobby.Infrasctructure\Mafia.Lobby.Infrasctructure.csproj" />
       <ProjectReference Include="..\Mafia.Shared.API\Mafia.Shared.API.csproj" />
       <ProjectReference Include="..\Mafia.Shared.Infrastructure\Mafia.Shared.Infrastructure.csproj" />
     </ItemGroup>

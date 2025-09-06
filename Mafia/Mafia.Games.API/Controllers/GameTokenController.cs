@@ -1,13 +1,14 @@
 using Mafia.Games.API.Extensions;
 using Mafia.Games.API.Tokens.GameToken;
 using Mafia.Games.Application.Handlers.PlayerHandlers.GetPlayerIdByIdentityId;
+using Mafia.Shared.API.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mafia.Games.API.Controllers;
 
 [ApiController]
-	[Route("api/Games")]
+[Route("api/Games")]
 public class GameTokenController : ControllerBase
 {
 	private readonly IGameTokenManager _tokenManager;
@@ -20,15 +21,15 @@ public class GameTokenController : ControllerBase
 	}
 
 	[HttpPost("{gameId}/Token")]
-	public async Task<ActionResult<string>> GetToken(Guid gameId)
+	public async Task<ResponseModel<string>> GetToken(Guid gameId)
 	{
 		var userId = User.GetUserId();
 		var playerId = await _mediator.Send(new GetPlayerIdByIdentityIdQuery(gameId, userId));
 
 		if (playerId == Guid.Empty)
-			return Unauthorized();
+			return ResponseModel<string>.Fail(["You are unauthorized"]);
 
 		var token = _tokenManager.GenerateToken(gameId, playerId);
-		return Ok(token);
+		return ResponseModel<string>.Ok(token);
 	}
 }

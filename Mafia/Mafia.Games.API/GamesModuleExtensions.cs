@@ -7,8 +7,10 @@ using Mafia.Games.Application.Mappers;
 using Mafia.Games.Domain.Services;
 using Mafia.Games.Domain.Services.Interfaces;
 using Mafia.Games.Infrastructure.Persistence.Repositories;
+using Mafia.Shared.Contracts.Messaging;
 using Mafia.Shared.Kernel.Services;
 using Mefia.Shared.Infrastructure.BackgroundServices;
+using Mefia.Shared.Infrastructure.Messaging;
 using Mefia.Shared.Infrastructure.Services.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,6 +40,8 @@ public static class GamesModuleExtensions
 		services.AddSingleton<IGameTokenManager, GameTokenManager>();
 		services.AddSingleton<IGameNotifier, GameNotifier>();
 		services.AddSingleton<IAlarmService, InMemoryAlarmService>();
+		services.AddScoped<IEventBus, MediatorEventBus>();
+		services.AddScoped<IMessageBus, MediatorMessageBus>();
 		
 		// Domain Services
 		services.AddSingleton<IClockService, ClockService>();
