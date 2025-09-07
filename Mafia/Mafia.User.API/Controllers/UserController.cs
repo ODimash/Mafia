@@ -1,4 +1,5 @@
-﻿using Mafia.User.Application.DTOs;
+﻿using Mafia.Shared.API.Models;
+using Mafia.User.API.Models;
 using Mafia.User.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,31 +16,29 @@ public class UserController : ControllerBase
         _service = service;
     }
 
+
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<UserDto>> Get(Guid id)
+    public async Task<ResponseModel<GetUserResponseData>> Get(Guid id)
     {
-        var user = await _service.GetUserAsync(id);
-        if (user == null) return NotFound();
-        return Ok(user);
+        var result = await _service.GetUserAsync(id);
+        return result.ToResponse(x => new GetUserResponseData(x));
     }
 
     [HttpPost("Registration")]
-    public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
+    public async Task<ResponseModel> Create([FromBody] CreateUserRequest request)
     {
-        await _service.CreateUserAsync(request.UserName, request.Email, request.Password);
-        return Ok();
+        var result = await _service.CreateUserAsync(request.UserName, request.Email, request.Password);
+        return result.ToEmptyResponse();
     }
 
     [HttpPost("Login")]
-    public async Task<IActionResult> Login([FromBody] LoginRequest request)
+    public async Task<ResponseModel<AuthResponse>> Login([FromBody] LoginRequest request)
     {
         var result = await _service.LoginAsync(request.Email, request.Password);
-        if (result.IsFailed) return BadRequest(result.Errors);
-        return Ok();
+        return result.ToResponse(x => new AuthResponse(result.Value));
     }
 
 
 }
 
-public record LoginRequest(string Email, string Password);
-public record CreateUserRequest(string UserName, string Email, string Password);
+

@@ -1,6 +1,6 @@
 using Mafia.Lobby.Application.Handlers.RoomHandlers.ChangePrivacy;
 
-namespace Mafia.Lobby.API.RequestModels;
+namespace Mafia.Lobby.API.Models.RequestModels;
 
 public record ChangePrivacyRequest(bool IsPrivate, string? Password)
 {

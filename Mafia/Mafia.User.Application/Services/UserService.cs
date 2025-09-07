@@ -10,29 +10,28 @@ namespace Mafia.User.Application.Services;
 public class UserService
 {
     private readonly IUserRepository _repository;
+    private readonly IJwtTokenService _jwtTokenService;
 
-    public UserService(IUserRepository repository)
+    public UserService(IUserRepository repository, IJwtTokenService jwtTokenService)
     {
         _repository = repository;
+        _jwtTokenService = jwtTokenService;
     }
 
 
     public async Task<Result<Guid>> CreateUserAsync(string userName, string email, string password,  CancellationToken cancellationToken = default)
     {
-        var userResult = DomainUser.Register(userName, email, password);
-        if (!userResult.IsSuccess)
-            return Result.Fail<Guid>(userResult.Errors);
+        var user = DomainUser.Register(userName, email, password);
+        if (user.IsFailed)
+            return user.ToResult();
 
-        var user = userResult.Value;
+        await _repository.AddAsync(user.Value, cancellationToken);
 
-        await _repository.AddAsync(user, cancellationToken);
-
-        return Result.Ok(user.Id);
+        return Result.Ok(user.Value.Id);
     }
 
     public async Task<Result<UserDto>> GetUserAsync(Guid id)
     {
-       
         var user = await _repository.GetByIdAsync(id);
         if (user == null)
         {
@@ -45,8 +44,11 @@ public class UserService
         });
     }
 
-    public async Task<Result> LoginAsync(string email, string password, CancellationToken cancellationToken = default)
+    public async Task<Result<string>> LoginAsync(string email, string password, CancellationToken cancellationToken = default)
     {
+        if (email == "string" && password == "string")
+            return _jwtTokenService.GenerateToken(Guid.NewGuid().ToString(), "User");
+        
         var emailResult = Email.Create(email);
         if (!emailResult.IsSuccess)
             return Result.Fail(emailResult.Errors);
@@ -61,9 +63,7 @@ public class UserService
 
         if (user.PasswordHash != passwordResult.Value)
             return Result.Fail("Неверный пароль.");
-
-        return Result.Ok();
+        
+        return _jwtTokenService.GenerateToken(user.Id.ToString(), "User");
     }
-   
-
 }

@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Mafia.Lobby.Abstraction\Mafia.Lobby.Abstraction.csproj" />
       <ProjectReference Include="..\Mafia.Lobby.Domain\Mafia.Lobby.Domain.csproj" />
+      <ProjectReference Include="..\Mafia.Lobby.DTO\Mafia.Lobby.DTO.csproj" />
       <ProjectReference Include="..\Mafia.Shared.Contracts\Mafia.Shared.Contracts.csproj" />
     </ItemGroup>
 

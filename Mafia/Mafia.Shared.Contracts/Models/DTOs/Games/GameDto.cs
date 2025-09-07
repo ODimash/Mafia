@@ -1,6 +1,7 @@
+using Mafia.Shared.Contracts.DTOs.Games;
 using Mafia.Shared.Kernel.Enums;
 
-namespace Mafia.Shared.Contracts.DTOs.Games;
+namespace Mafia.Shared.Contracts.Models.DTOs.Games;
 
 public class GameDto
 {

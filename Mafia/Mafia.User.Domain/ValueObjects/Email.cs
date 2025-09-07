@@ -4,7 +4,7 @@ namespace Mafia.User.Domain.ValueObjects;
 
 public class Email
 {
-    private static readonly Regex EmailRegex =
+    private static readonly Regex _emailRegex =
         new(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
     public string Value { get; }
@@ -22,7 +22,7 @@ public class Email
 
         if (string.IsNullOrWhiteSpace(email))
             errors.Add("Email не может быть пустым.");
-        else if (!EmailRegex.IsMatch(email))
+        else if (!_emailRegex.IsMatch(email))
             errors.Add("Некорректный формат email.");
 
         if (errors.Count > 0)

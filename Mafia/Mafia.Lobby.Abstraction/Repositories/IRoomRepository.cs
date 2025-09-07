@@ -1,4 +1,5 @@
 using Mafia.Lobby.Domain.Models;
+using Mafia.Shared.Contracts.Models;
 
 namespace Mafia.Lobby.Abstraction.Repositories;
 
@@ -9,4 +10,5 @@ public interface IRoomRepository
 	public Task<Room?> GetRoomById(Guid id, CancellationToken token);
 	public Task<Room?> GetRoomByCode(string code, CancellationToken token);
 	public Task UpdateRoom(Room room, CancellationToken token);
+	public Task DeleteRoomById(Guid id, CancellationToken token);
 }

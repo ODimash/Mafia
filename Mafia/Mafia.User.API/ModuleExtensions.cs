@@ -1,20 +1,23 @@
-﻿using Mafia.User.Application.Contracts;
+﻿using Mafia.User.API.Authentication;
+using Mafia.User.Application.Contracts;
 using Mafia.User.Application.Services;
 using Mafia.User.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
 
 namespace Mafia.User.API;
 
 public static class ModuleExtensions
 {
     // Регистрируем зависимости
-    public static IServiceCollection AddUsersModule(this IServiceCollection services)
+    public static IServiceCollection AddUsersModule(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddSingleton<IUserRepository, InMemoryUserRepository>();
         services.AddScoped<UserService>();
-           
+        services.AddSingleton<IJwtTokenService, JwtTokenService>();
+
+        services.AddUsersAuthentication(configuration);
+        
         return services;
     }
 

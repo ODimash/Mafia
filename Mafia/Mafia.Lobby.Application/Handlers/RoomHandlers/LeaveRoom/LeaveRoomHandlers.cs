@@ -20,8 +20,11 @@ public class LeaveRoomHandlers : ICommandHandler<LeaveRoomCommand, Result>
 			return Result.Fail("No room found");
 		
 		var result = room.Leave(request.UserId);
-		if (result.IsSuccess)
+		
+		if (result.IsSuccess && room.Players.Count != 0)
 			await _roomRepository.UpdateRoom(room, cancellationToken);
+		else if (result.IsSuccess && room.Players.Count == 0)
+			await _roomRepository.DeleteRoomById(room.Id, cancellationToken);
 		
 		return result;
 	}

@@ -3,7 +3,7 @@ using Mafia.User.Application.Contracts;
 
 namespace Mafia.User.Infrastructure.Repositories;
 
-public class UserRepository : IUserRepository
+public class InMemoryUserRepository : IUserRepository
 {
     private readonly List<DomainUser> _users = new(); // Для примера, вместо БД
 

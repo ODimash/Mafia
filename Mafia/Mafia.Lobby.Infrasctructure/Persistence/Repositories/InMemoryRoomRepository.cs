@@ -1,5 +1,6 @@
 using Mafia.Lobby.Abstraction.Repositories;
 using Mafia.Lobby.Domain.Models;
+using Mafia.Shared.Contracts.Models;
 using System.Collections.Concurrent;
 
 namespace Mafia.Lobby.Infrasctructure.Persistence.Repositories;
@@ -7,7 +8,9 @@ namespace Mafia.Lobby.Infrasctructure.Persistence.Repositories;
 public class InMemoryRoomRepository : IRoomRepository
 {
 	private readonly ConcurrentDictionary<Guid, Room> _rooms = [];
-
+	
+	internal IReadOnlyDictionary<Guid, Room> Rooms => _rooms;
+	
 	public Task<bool> RoomCodeExists(string code, CancellationToken token)
 	{
 		return Task.FromResult(
@@ -34,6 +37,11 @@ public class InMemoryRoomRepository : IRoomRepository
 	public Task UpdateRoom(Room room, CancellationToken token)
 	{
 		_rooms.AddOrUpdate(room.Id, room, (_, _) => room);
+		return Task.CompletedTask;
+	}
+	public Task DeleteRoomById(Guid id, CancellationToken token)
+	{
+		_rooms.TryRemove(id, out _);
 		return Task.CompletedTask;
 	}
 }

@@ -21,9 +21,9 @@ public class UpdateSettingsHandler : ICommandHandler<UpdateSettingsCommand, Resu
 			return Result.Fail("Room not found");
 		
 		var settings = RoomSettings.Create(
-			request.RoomSettings.DayDiscussionDuration, 
-			request.RoomSettings.NightDuration, 
-			request.RoomSettings.VotingDuration,
+			TimeSpan.FromSeconds(request.RoomSettings.DayDiscussionDurationInSeconds), 
+			TimeSpan.FromSeconds(request.RoomSettings.NightDurationInSeconds), 
+			TimeSpan.FromSeconds(request.RoomSettings.VotingDurationInSeconds),
 			request.RoomSettings.EnabledRoles,
 			request.RoomSettings.MaxPlayersCount,
 			request.RoomSettings.MinPlayersCount);

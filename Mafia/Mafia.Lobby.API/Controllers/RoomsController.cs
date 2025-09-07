@@ -1,12 +1,13 @@
-using Mafia.Lobby.API.RequestModels;
-using Mafia.Lobby.Application.Handlers.RoomHandlers.ChangePrivacy;
-using Mafia.Lobby.Application.Handlers.RoomHandlers.CreateRoom;
+using Mafia.Lobby.API.Models.RequestModels;
+using Mafia.Lobby.Application.Handlers.RoomHandlers.GetRooms;
 using Mafia.Lobby.Application.Handlers.RoomHandlers.KickUser;
 using Mafia.Lobby.Application.Handlers.RoomHandlers.LeaveRoom;
 using Mafia.Lobby.Application.Handlers.RoomHandlers.StartGame;
 using Mafia.Lobby.Application.Handlers.RoomHandlers.UpdateSettings;
+using Mafia.Lobby.DTO.DTOs;
 using Mafia.Shared.API.Models;
-using Mafia.Shared.Contracts.DTOs.Lobby;
+using Mafia.Shared.Contracts.Models;
+using Mafia.Shared.Contracts.Models.DTOs.Lobby;
 using MediatR;
 using Mefia.Shared.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -19,9 +20,9 @@ namespace Mafia.Lobby.API.Controllers;
 [Authorize]
 public class RoomsController : ControllerBase
 {
-	
-	private readonly IMediator  _mediator;
-	
+
+	private readonly IMediator _mediator;
+
 	public RoomsController(IMediator mediator)
 	{
 		_mediator = mediator;
@@ -46,7 +47,7 @@ public class RoomsController : ControllerBase
 	[HttpPost("{roomId}/Leave")]
 	public async Task<ResponseModel> LeaveRoom(Guid roomId)
 	{
-		var command = new LeaveRoomCommand() { RoomId = roomId, UserId =  User.GetUserId() };
+		var command = new LeaveRoomCommand() { RoomId = roomId, UserId = User.GetUserId() };
 		var result = await _mediator.Send(command);
 		return result.ToResponse();
 	}
@@ -70,7 +71,7 @@ public class RoomsController : ControllerBase
 	[HttpPut("{roomId}/Settings")]
 	public async Task<ResponseModel> UpdateSettings(Guid roomId, [FromBody] RoomSettingsDto settings)
 	{
-		var command = new UpdateSettingsCommand() { RoomId = roomId, RoomSettings = settings, UserId =  User.GetUserId() };
+		var command = new UpdateSettingsCommand() { RoomId = roomId, RoomSettings = settings, UserId = User.GetUserId() };
 		var result = await _mediator.Send(command);
 		return result.ToResponse();
 	}
@@ -81,5 +82,13 @@ public class RoomsController : ControllerBase
 		var command = request.ToCommand(roomId, User.GetUserId());
 		var result = await _mediator.Send(command);
 		return result.ToResponse();
-	} 
+	}
+
+	[AllowAnonymous]
+	[HttpGet]
+	public async Task<PagedResult<RoomDto>> GetRooms([FromQuery] PageFilter filter)
+	{
+		var query = new GetRoomsQuery() { Page = filter.Page, PageSize = filter.PageSize, };
+		return await _mediator.Send(query);
+	}
 }

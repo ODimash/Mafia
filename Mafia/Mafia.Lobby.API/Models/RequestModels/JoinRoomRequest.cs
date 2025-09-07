@@ -1,6 +1,6 @@
 using Mafia.Lobby.Application.Handlers.RoomHandlers.JoinRoom;
 
-namespace Mafia.Lobby.API.RequestModels;
+namespace Mafia.Lobby.API.Models.RequestModels;
 
 public record JoinRoomRequest(string? RoomCode, Guid? RoomId, string? Password)
 {

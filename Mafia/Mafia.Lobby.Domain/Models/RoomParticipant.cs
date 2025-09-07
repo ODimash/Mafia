@@ -10,12 +10,16 @@ public class RoomParticipant : Entity<Guid>
     public Guid UserId { get; }
     public Guid RoomId { get; }
     public bool IsReady { get; private set; }
+    public DateTime JoinTime { get; }
 		
-    private RoomParticipant(Guid userId, Guid roomId, bool isReady)
+    private RoomParticipant(Guid userId, Guid roomId, bool isReady, DateTime joinTime)
     {
+        Id = userId;
         UserId = userId;
         RoomId = roomId;
         IsReady = isReady;
+        JoinTime = joinTime;
+
     }
 
     public static Result<RoomParticipant> Create(Guid userId, Guid roomId)
@@ -26,6 +30,6 @@ public class RoomParticipant : Entity<Guid>
         if (roomId == Guid.Empty)
             return  Result.Fail("Room ID can not be empty");
 
-        return new RoomParticipant(userId, roomId, true);
+        return new RoomParticipant(userId, roomId, true, DateTime.UtcNow);
     }
 }

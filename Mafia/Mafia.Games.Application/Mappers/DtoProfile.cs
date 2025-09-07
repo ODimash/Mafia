@@ -1,7 +1,7 @@
 using AutoMapper;
 using Mafia.Games.Domain.Models;
-using Mafia.Shared.Contracts.DTOs;
 using Mafia.Shared.Contracts.DTOs.Games;
+using Mafia.Shared.Contracts.Models.DTOs.Games;
 
 namespace Mafia.Games.Application.Mappers;
 

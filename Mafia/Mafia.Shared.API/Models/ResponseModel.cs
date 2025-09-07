@@ -35,6 +35,29 @@ public static class ResultExtensions
 				: null,
 		};
 	}
+	
+	public static ResponseModel<TResponse> ToResponse<TResult, TResponse>(this Result<TResult> result, Func<TResult, TResponse> responseFunc)
+	{
+		return new ResponseModel<TResponse>
+		{
+			IsSuccess = result.IsSuccess,
+			Data = result.IsSuccess ? responseFunc.Invoke(result.Value) : default,
+			Errors = result.IsFailed 
+				? result.Errors.Select(e => e.Message).ToList()
+				: null,
+		};
+	}
+	
+	public static ResponseModel ToEmptyResponse<T>(this Result<T> result)
+	{
+		return new ResponseModel
+		{
+			IsSuccess = result.IsSuccess,
+			Errors = result.IsFailed 
+				? result.Errors.Select(e => e.Message).ToList()
+				: null,
+		};
+	}
 
 	public static ResponseModel ToResponse(this Result result)
 	{

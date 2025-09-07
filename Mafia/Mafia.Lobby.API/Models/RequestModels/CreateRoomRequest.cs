@@ -1,7 +1,7 @@
 using Mafia.Lobby.Application.Handlers.RoomHandlers.CreateRoom;
-using Mafia.Shared.Contracts.DTOs.Lobby;
+using Mafia.Shared.Contracts.Models.DTOs.Lobby;
 
-namespace Mafia.Lobby.API.RequestModels;
+namespace Mafia.Lobby.API.Models.RequestModels;
 
 public record CreateRoomRequest(
 	RoomSettingsDto Settings,

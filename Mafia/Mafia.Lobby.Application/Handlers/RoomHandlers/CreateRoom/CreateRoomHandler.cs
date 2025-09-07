@@ -19,9 +19,9 @@ public class CreateRoomHandler : ICommandHandler<CreateRoomCommand, Result<Guid>
 	public async Task<Result<Guid>> Handle(CreateRoomCommand request, CancellationToken cancellationToken)
 	{
 		var settingsResult = RoomSettings.Create(
-			request.Settings.DayDiscussionDuration, 
-			request.Settings.NightDuration, 
-			request.Settings.VotingDuration,
+			TimeSpan.FromSeconds(request.Settings.DayDiscussionDurationInSeconds), 
+			TimeSpan.FromSeconds(request.Settings.NightDurationInSeconds), 
+			TimeSpan.FromSeconds(request.Settings.VotingDurationInSeconds),
 			request.Settings.EnabledRoles,
 			request.Settings.MaxPlayersCount,
 			request.Settings.MinPlayersCount);

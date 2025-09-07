@@ -1,34 +1,36 @@
 using Mafia.Games.API;
 using Mafia.User.API;
-using Mafia.User.API.Controllers;
-using Scalar.AspNetCore;
-using Mafia.Games.API.Controllers;
 using Mafia.Games.API.Hubs;
 using Mafia.Lobby.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
-
+// builder.Services.AddAutoMapper(c =>
+// 	c.LicenseKey =
+// 		"eyJhbGciOiJSUzI1NiIsImtpZCI6Ikx1Y2t5UGVubnlTb2Z0d2FyZUxpY2Vuc2VLZXkvYmJiMTNhY2I1OTkwNGQ4OWI0Y2IxYzg1ZjA4OGNjZjkiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2x1Y2t5cGVubnlzb2Z0d2FyZS5jb20iLCJhdWQiOiJMdWNreVBlbm55U29mdHdhcmUiLCJleHAiOiIxNzg4NzM5MjAwIiwiaWF0IjoiMTc1NzI1NDIxMyIsImFjY291bnRfaWQiOiIwMTk5MjQ3OGQwZGE3ODRjYjk4MjJhZTAyOWQ2MmVhNCIsImN1c3RvbWVyX2lkIjoiY3RtXzAxazRqODZxcDM4dmE1MzNibTM1Nzh4cjMwIiwic3ViX2lkIjoiLSIsImVkaXRpb24iOiIwIiwidHlwZSI6IjIifQ.Zq6Zf4T3YqxsmDELAQAPcQLAY_25IRL7MO3f3Vp86mXjlGwiO7JIDSrhgUGmfYhDy543ktd67C0U7petJ-crHasXFW2iW9fjamLgcJlX8k_ME3PxXAXrTgdY2D5JkiqAwWZj_2wJ7oPX4TaNLYPxvwKXkc4KU5EUjqzVG39K76PyvBIvU7SG0p-4gFh0RRV52bacW2H98c3QmtKJTKbxZng1iUbSrxIba4K6KWnla3D-wFJIqC1Z2XB0okfzKsVhNU6JQzf2-sVwahp_xibl3x2BcLw_6sXw7LDpsK1N4_yCgzj5uqQFp0CCzWw4WDO4_1QEGgmx-ptVo5aD-pxQHA");
+// builder.Services.AddMediatR(c =>
+// 	c.LicenseKey =
+// 		"eyJhbGciOiJSUzI1NiIsImtpZCI6Ikx1Y2t5UGVubnlTb2Z0d2FyZUxpY2Vuc2VLZXkvYmJiMTNhY2I1OTkwNGQ4OWI0Y2IxYzg1ZjA4OGNjZjkiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2x1Y2t5cGVubnlzb2Z0d2FyZS5jb20iLCJhdWQiOiJMdWNreVBlbm55U29mdHdhcmUiLCJleHAiOiIxNzg4NzM5MjAwIiwiaWF0IjoiMTc1NzI1NDIxMyIsImFjY291bnRfaWQiOiIwMTk5MjQ3OGQwZGE3ODRjYjk4MjJhZTAyOWQ2MmVhNCIsImN1c3RvbWVyX2lkIjoiY3RtXzAxazRqODZxcDM4dmE1MzNibTM1Nzh4cjMwIiwic3ViX2lkIjoiLSIsImVkaXRpb24iOiIwIiwidHlwZSI6IjIifQ.Zq6Zf4T3YqxsmDELAQAPcQLAY_25IRL7MO3f3Vp86mXjlGwiO7JIDSrhgUGmfYhDy543ktd67C0U7petJ-crHasXFW2iW9fjamLgcJlX8k_ME3PxXAXrTgdY2D5JkiqAwWZj_2wJ7oPX4TaNLYPxvwKXkc4KU5EUjqzVG39K76PyvBIvU7SG0p-4gFh0RRV52bacW2H98c3QmtKJTKbxZng1iUbSrxIba4K6KWnla3D-wFJIqC1Z2XB0okfzKsVhNU6JQzf2-sVwahp_xibl3x2BcLw_6sXw7LDpsK1N4_yCgzj5uqQFp0CCzWw4WDO4_1QEGgmx-ptVo5aD-pxQHA");
 builder.Services.AddGamesModule(builder.Configuration);
 builder.Services.AddLobbyModule();
+builder.Services.AddUsersModule(builder.Configuration);
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+	app.UseSwagger();
+	app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.MapHub<GameHub>("/hub/game");  
+app.MapHub<GameHub>("/hub/game");
 app.Run();

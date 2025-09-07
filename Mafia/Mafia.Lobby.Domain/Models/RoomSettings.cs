@@ -2,7 +2,6 @@
 using Mafia.Shared.Kernel;
 using Mafia.Shared.Kernel.Constants;
 using Mafia.Shared.Kernel.Enums;
-using System.Data;
 
 namespace Mafia.Lobby.Domain.Models;
 

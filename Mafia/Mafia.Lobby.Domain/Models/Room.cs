@@ -112,8 +112,16 @@ public class Room : AggregateRoot<Guid>
 	{
 		if (State != RoomState.Waiting)
 			return Result.Fail("Cannot leave a room that is not waiting");
-
+		
+		
 		_players.RemoveAll(p => p.UserId == userId);
+
+		if (OwnerId == userId && _players.Count != 0)
+		{
+			_players.Sort((a, b) => a.JoinTime.CompareTo(b.JoinTime));
+			OwnerId = _players[0].Id;
+		}
+		
 		AddDomainEvent(new PlayerLeftRoomDomainEvent(Id, userId));
 
 		if (_players.Count < Settings.MinPlayersCount && StartTime != null)
