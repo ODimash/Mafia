@@ -2,6 +2,7 @@ using Mafia.Games.API;
 using Mafia.User.API;
 using Mafia.Games.API.Hubs;
 using Mafia.Lobby.API;
+using Mafia.Chats.API.ModuleExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddGamesModule(builder.Configuration);
 builder.Services.AddLobbyModule();
 builder.Services.AddUsersModule(builder.Configuration);
+builder.Services.AddChatModule();
 
 var app = builder.Build();
 

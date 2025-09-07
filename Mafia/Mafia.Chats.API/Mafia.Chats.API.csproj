@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mafia.Chats.Domain\Mafia.Chats.Domain.csproj" />
+    <ProjectReference Include="..\Mafia.Chats.Application\Mafia.Chats.Application.csproj" />
+    <ProjectReference Include="..\Mafia.Chats.Infrasctructure\Mafia.Chats.Infrasctructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
