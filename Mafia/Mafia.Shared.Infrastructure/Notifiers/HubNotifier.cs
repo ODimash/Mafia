@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
-namespace Mefia.Shared.Infrastructure.Notifiers;
+namespace Mafia.Shared.Infrastructure.Notifiers;
 
 public abstract class HubNotifier<T> where T : Hub
 {
-	private readonly IHubContext<T>  _hubContext;
+	private readonly IHubContext<T> _hubContext;
 	private readonly ILogger<HubNotifier<T>> _logger;
-	
+
 	protected HubNotifier(IHubContext<T> hubContext, ILogger<HubNotifier<T>> logger)
 	{
 		_hubContext = hubContext;
@@ -22,7 +22,7 @@ public abstract class HubNotifier<T> where T : Hub
 		}
 		catch (Exception ex)
 		{
-			_logger.LogError(
+			_logger.LogError(ex,
 				"Failed while sending signal {Signal} " +
 				"to group {GroupName} with arguments {Args}", groupName, message, arg);
 		}
@@ -36,9 +36,9 @@ public abstract class HubNotifier<T> where T : Hub
 		}
 		catch (Exception ex)
 		{
-			_logger.LogError(
+			_logger.LogError(ex,
 				"Failed while sending signal {Signal} to user " +
-				"with connection ID {ConnectionId} and arguments {Args}", 
+				"with connection ID {ConnectionId} and arguments {Args}",
 				message, connectionId, arg);
 		}
 	}
@@ -51,7 +51,7 @@ public abstract class HubNotifier<T> where T : Hub
 		}
 		catch (Exception e)
 		{
-			_logger.LogError(
+			_logger.LogError(e,
 				"Failed while sending signal {Signal} to all users " +
 				"of hub {HubName} with arguments {Args}",
 				message, typeof(T).Name, arg);

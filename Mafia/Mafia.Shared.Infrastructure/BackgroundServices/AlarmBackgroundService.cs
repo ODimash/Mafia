@@ -1,10 +1,10 @@
 using MediatR;
-using Mefia.Shared.Infrastructure.Services.Services;
+using Mafia.Shared.Infrastructure.Services.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Mefia.Shared.Infrastructure.BackgroundServices;
+namespace Mafia.Shared.Infrastructure.BackgroundServices;
 
 public class AlarmBackgroundService : BackgroundService
 {

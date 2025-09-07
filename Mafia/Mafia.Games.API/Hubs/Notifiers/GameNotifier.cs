@@ -2,7 +2,7 @@ using Mafia.Games.Abstraction.Notifiers;
 using Mafia.Shared.Contracts.DTOs;
 using Mafia.Shared.Contracts.DTOs.Games;
 using Mafia.Shared.Kernel.Enums;
-using Mefia.Shared.Infrastructure.Notifiers;
+using Mafia.Shared.Infrastructure.Notifiers;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 

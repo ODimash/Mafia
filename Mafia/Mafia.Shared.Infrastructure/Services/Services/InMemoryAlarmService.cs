@@ -2,7 +2,7 @@ using Mafia.Shared.Kernel;
 using Mafia.Shared.Kernel.Services;
 using Microsoft.Extensions.Logging;
 
-namespace Mefia.Shared.Infrastructure.Services.Services;
+namespace Mafia.Shared.Infrastructure.Services.Services;
 
 public class InMemoryAlarmService : IAlarmService
 {
@@ -35,7 +35,7 @@ public class InMemoryAlarmService : IAlarmService
 	{
 		lock (_lock)
 		{
-			_events.RemoveAll(x => x.Event.GetType() == type);	
+			_events.RemoveAll(x => x.Event.GetType() == type);
 		}
 	}
 

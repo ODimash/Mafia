@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace Mefia.Shared.Infrastructure.Extensions;
+namespace Mafia.Shared.Infrastructure.Extensions;
 
 public static class ClaimPrincipalExtensions
 {

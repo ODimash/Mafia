@@ -10,9 +10,9 @@ using Mafia.Games.Domain.Services.Interfaces;
 using Mafia.Games.Infrastructure.Persistence.Repositories;
 using Mafia.Shared.Contracts.Messaging;
 using Mafia.Shared.Kernel.Services;
-using Mefia.Shared.Infrastructure.BackgroundServices;
-using Mefia.Shared.Infrastructure.Messaging;
-using Mefia.Shared.Infrastructure.Services.Services;
+using Mafia.Shared.Infrastructure.BackgroundServices;
+using Mafia.Shared.Infrastructure.Messaging;
+using Mafia.Shared.Infrastructure.Services.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -46,7 +46,7 @@ public static class GamesModuleExtensions
 		services.AddSingleton<IAlarmService, InMemoryAlarmService>();
 		services.AddScoped<IEventBus, MediatorEventBus>();
 		services.AddScoped<IMessageBus, MediatorMessageBus>();
-		
+
 		// Domain Services
 		services.AddSingleton<IClockService, ClockService>();
 		services.AddSingleton<IGameActionService, GameActionService>();
@@ -57,7 +57,7 @@ public static class GamesModuleExtensions
 
 		services.AddHttpContextAccessor();
 		services.AddScoped<IGameContextAccessor, GameContextAccessor>();
-		
+
 		return services;
 	}
 }

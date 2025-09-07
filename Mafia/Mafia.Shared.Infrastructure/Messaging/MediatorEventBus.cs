@@ -2,13 +2,13 @@ using Mafia.Shared.Contracts.Messaging;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Mefia.Shared.Infrastructure.Messaging;
+namespace Mafia.Shared.Infrastructure.Messaging;
 
 public class MediatorEventBus : IEventBus
 {
 	private readonly IMediator _mediator;
 	private readonly ILogger<MediatorEventBus> _logger;
-	
+
 	public MediatorEventBus(IMediator mediator, ILogger<MediatorEventBus> logger)
 	{
 		_mediator = mediator;

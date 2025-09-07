@@ -9,7 +9,7 @@ using Mafia.Shared.API.Models;
 using Mafia.Shared.Contracts.Models;
 using Mafia.Shared.Contracts.Models.DTOs.Lobby;
 using MediatR;
-using Mefia.Shared.Infrastructure.Extensions;
+using Mafia.Shared.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
