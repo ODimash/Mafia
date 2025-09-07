@@ -1,5 +1,6 @@
 using Mafia.Games.Abstraction.Notifiers;
 using Mafia.Games.Abstraction.Repositories;
+using Mafia.Games.API.Configs;
 using Mafia.Games.API.Hubs.Notifiers;
 using Mafia.Games.API.Tokens.GameToken;
 using Mafia.Games.Application.Handlers.GameHandlers;
@@ -14,6 +15,8 @@ using Mefia.Shared.Infrastructure.Messaging;
 using Mefia.Shared.Infrastructure.Services.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Mafia.Games.API;
 
@@ -23,6 +26,7 @@ public static class GamesModuleExtensions
 	{
 		// Configs
 		services.Configure<GameTokenOptions>(configuration.GetSection("GameToken"));
+		services.AddTransient<IConfigureOptions<SwaggerGenOptions>, GameSwaggerConfig>();
 
 		// External Services
 		services.AddMediatR(c => c.RegisterServicesFromAssembly(typeof(StartGameHandler).Assembly));
